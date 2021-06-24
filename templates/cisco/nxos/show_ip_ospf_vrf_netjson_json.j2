@@ -1,0 +1,202 @@
+{
+    "type": "NetworkGraph",
+    "label": "Show IP OSPF",
+    "protocol": "OLSR",
+    "version": "0.6.6.2",
+    "metric": "ETX",
+    "nodes": [
+        { 
+            "id": "{{ device_alias }}"
+        },{% for vrf in to_parse_ip_ospf %}{% set vrf_loop = loop %}{% for address_family in to_parse_ip_ospf[vrf].address_family %}{% set address_family_loop = loop %}{% for instance in to_parse_ip_ospf[vrf].address_family[address_family].instance %}{% set instance_loop = loop %}{% for graceful_restart in to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].graceful_restart %}{% set restart_loop = loop %}{% if to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas is defined %}{% for area in to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas %}{% set area_loop = loop %}
+        { 
+            "id": "VRF: {{ vrf }}"
+        },
+        { 
+            "id": "Address Family: {{ address_family }}"
+        },
+        { 
+            "id": "Instance: {{ instance }}"
+        },
+        { 
+            "id": "Router ID: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].router_id }}"
+        },
+        { 
+            "id": "Area: {{ area }}"
+        },
+        { 
+            "id": "Area Type: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].area_type }}"
+        },
+        { 
+            "id": "Area Enable: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].enable }}"
+        },
+        { 
+            "id": "Active Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.active_interfaces }}"
+        },
+        { 
+            "id": "Passive Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.passive_interfaces }}"
+        },
+        { 
+            "id": "Loopback Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.loopback_interfaces }}"
+        },
+        { 
+            "id": "Total Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.interfaces }}"
+        },
+        { 
+            "id": "SPF Count: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].statistics.spf_runs_count }}"
+        },
+        { 
+            "id": "Last SPF Run: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].statistics.spf_last_run_time }}"
+        },
+        { 
+            "id": "Auto Cost Enable: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.enable }}"
+        },  
+        { 
+            "id": "Auto Cost Bandwidth {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.reference_bandwidth }}"
+        },
+        { 
+            "id": "SPF Paths {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].spf_control.paths }}"{% if (vrf_loop.last) and (address_family_loop.last) and (instance_loop.last) and (restart_loop.last) and (area_loop.last) %}
+        }{% else %}
+        },{% endif %}{% endfor %}{% else %}
+        { 
+            "id": "VRF: {{ vrf }}"
+        },
+        { 
+            "id": "Address Family: {{ address_family }}"
+        },
+        { 
+            "id": "Instance: {{ instance }}"
+        },
+        { 
+            "id": "Router ID: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].router_id }}"
+        },
+        { 
+            "id": "Auto Cost Enable: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.enable }}"
+        },  
+        { 
+            "id": "Auto Cost Bandwidth {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.reference_bandwidth }}"
+        },
+        { 
+            "id": "SPF Paths {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].spf_control.paths }}"{% if (vrf_loop.last) and (address_family_loop.last) and (instance_loop.last) and (restart_loop.last) %}
+        }{% else %}
+        },{% endif %}{% endif %}{% endfor %}{% endfor %}{% endfor %}{% endfor %}
+    ],
+    "links": [{% for vrf in to_parse_ip_ospf %}{% set vrf_loop = loop %}{% for address_family in to_parse_ip_ospf[vrf].address_family %}{% set address_family_loop = loop %}{% for instance in to_parse_ip_ospf[vrf].address_family[address_family].instance %}{% set instance_loop = loop %}{% for graceful_restart in to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].graceful_restart %}{% set restart_loop = loop %}{% if to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas is defined %}{% for area in to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas %}{% set area_loop = loop %}
+        {
+            "source": "{{ device_alias }}",
+            "target": "VRF: {{ vrf }}",
+            "cost": 1
+        },
+        { 
+            "source": "VRF: {{ vrf }}",
+            "target": "Address Family: {{ address_family }}",
+            "cost": 1
+        },
+        { 
+            "source": "Address Family: {{ address_family }}",
+            "target": "Instance: {{ instance }}",
+            "cost": 1
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Router ID: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].router_id }}",
+            "cost": 1
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Area: {{ area }}",
+            "cost": 1            
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Area Type: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].area_type }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Area Enable: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].enable }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Active Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.active_interfaces }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Passive Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.passive_interfaces }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Loopback Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.loopback_interfaces }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Total Interfaces: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].numbers.interfaces }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "SPF Count: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].statistics.spf_runs_count }}",
+            "cost": 1
+        },
+        { 
+            "source": "Area: {{ area }}",
+            "target": "Last SPF Run: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].areas[area].statistics.spf_last_run_time }}",
+            "cost": 1
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Auto Cost Enable: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.enable }}",
+            "cost": 1
+        },  
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Auto Cost Bandwidth {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.reference_bandwidth }}",
+            "cost": 1            
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "SPF Paths {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].spf_control.paths }}",
+            "cost": 1{% if (vrf_loop.last) and (address_family_loop.last) and (instance_loop.last) and (restart_loop.last) and (area_loop.last) %}
+        }{% else %}
+        },{% endif %}{% endfor %}{% else %}
+        {
+            "source": "{{ device_alias }}",
+            "target": "VRF: {{ vrf }}",
+            "cost": 1
+        },
+        { 
+            "source": "VRF: {{ vrf }}",
+            "target": "Address Family: {{ address_family }}",
+            "cost": 1
+        },
+        { 
+            "source": "Address Family: {{ address_family }}",
+            "target": "Instance: {{ instance }}",
+            "cost": 1
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Router ID: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].router_id }}",
+            "cost": 1
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Auto Cost Enable: {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.enable }}",
+            "cost": 1
+        },  
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "Auto Cost Bandwidth {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].auto_cost.reference_bandwidth }}",
+            "cost": 1            
+        },
+        { 
+            "source": "Instance: {{ instance }}",
+            "target": "SPF Paths {{ to_parse_ip_ospf[vrf].address_family[address_family].instance[instance].spf_control.paths }}",
+            "cost": 1{% if (vrf_loop.last) and (address_family_loop.last) and (instance_loop.last) and (restart_loop.last) %}
+        }{% else %}
+        },{% endif %}{% endif %}{% endfor %}{% endfor %}{% endfor %}{% endfor %}     
+    ]
+}

@@ -1,0 +1,400 @@
+{
+    "type": "NetworkGraph",
+    "label": "Learn Interfaces",
+    "protocol": "OLSR",
+    "version": "0.6.6.2",
+    "metric": "ETX",
+    "nodes": [
+        { 
+            "id": "{{ device_alias }}"
+        },{% for interface in to_parse_interface %}{% set interface_loop = loop %}{% if to_parse_interface[interface].description is defined %}
+        { 
+            "id": "Description: {{ to_parse_interface[interface].description | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].enabled is defined %}
+        { 
+            "id": "Enabled: {{ to_parse_interface[interface].enabled | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].oper_status is defined %}
+        { 
+            "id": "Operational Status: {{ to_parse_interface[interface].oper_status | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].access_vlan is defined %}
+        { 
+            "id": "Access VLAN: {{ to_parse_interface[interface].access_vlan | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].native_vlan is defined %}
+        { 
+            "id": "Native VLAN: {{ to_parse_interface[interface].native_vlan | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].switchport_enable is defined %}
+        { 
+            "id": "Switchport Enable: {{ to_parse_interface[interface].switchport_enable | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].switchport_mode is defined %}
+        { 
+            "id": "Switchport Mode: {{ to_parse_interface[interface].switchport_mode | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].type is defined %}
+        { 
+            "id": "Type: {{ to_parse_interface[interface].type | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].bandwidth is defined %}
+        { 
+            "id": "Bandwidth: {{ to_parse_interface[interface].bandwidth | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].auto_negotiate is defined %}
+        { 
+            "id": "Auto Negotiate: {{ to_parse_interface[interface].auto_negotiate | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].port_speed is defined %}
+        { 
+            "id": "Port Speed: {{ to_parse_interface[interface].port_speed | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].duplex_mode is defined %}
+        { 
+            "id": "Duplex: {{ to_parse_interface[interface].duplex_mode | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].mtu is defined %}
+        { 
+            "id": "MTU: {{ to_parse_interface[interface].mtu | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].mac_address is defined %}
+        { 
+            "id": "MAC Address: {{ to_parse_interface[interface].mac_address | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].phys_address is defined %}
+        { 
+            "id": "Physical Address: {{ to_parse_interface[interface].phys_address | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].ipv4 is defined %}{% for ip_address in to_parse_interface[interface].ipv4 %}
+        { 
+            "id": "IP Address: {{ ip_address }}"
+        },{% endfor %}{% endif %}{% if to_parse_interface[interface].medium is defined %}
+        { 
+            "id": "Medium: {{ to_parse_interface[interface].medium | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].delay is defined %}
+        { 
+            "id": "Delay: {{ to_parse_interface[interface].delay | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].encapsulation is defined %}
+        { 
+            "id": "Encapsulation: {{ to_parse_interface[interface].encapsulation.encapsulation | default("N/A") }}"
+        },{% endif %}
+        { 
+            "id": "Flow Control"
+        },{% if to_parse_interface[interface].flow_control is defined %}
+        { 
+            "id": "Flow Control Receive: {{ to_parse_interface[interface].flow_control.receive | default("N/A") }}"
+        },
+        { 
+            "id": "Flow Control Send: {{ to_parse_interface[interface].flow_control.send | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].port_channel is defined %}{% if to_parse_interface[interface].port_channel.port_channel_member_intfs is defined %}{% for member in to_parse_interface[interface].port_channel.port_channel_member_intfs %}    
+        { 
+            "id": "Port Channel Member: {{ member }}"
+        },{% endfor %}{% else %}{% if to_parse_interface[interface].port_channel.port_channel_member is defined %}       
+        { 
+            "id": "Port Channel Member: {{ to_parse_interface[interface].port_channel.port_channel_member }}"
+        },{% endif %}{% endif %}{% endif %}{% if to_parse_interface[interface].last_change is defined %}
+        { 
+            "id": "Last Change: {{ to_parse_interface[interface].last_change | default("N/A") }}"
+        },{% endif %}
+        {
+            "id": "Counters"
+        },{% if to_parse_interface[interface].counters is defined %}{% if to_parse_interface[interface].counters.in_broadcast_pkts is defined %}
+        { 
+            "id": "Input Broadcast: {{ to_parse_interface[interface].counters.in_broadcast_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_crc_errors is defined %}
+        { 
+            "id": "Input CRC Errors: {{ to_parse_interface[interface].counters.in_crc_errors | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_errors is defined %}
+        { 
+            "id": "Input Errors: {{ to_parse_interface[interface].counters.in_errors | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_mac_pause_frames is defined %}
+        { 
+            "id": "Input MAC Pause Frames: {{ to_parse_interface[interface].counters.in_mac_pause_frames | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_multicast_pkts is defined %}
+        { 
+            "id": "Input Multicast: {{ to_parse_interface[interface].counters.in_multicast_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_octets is defined %}
+        { 
+            "id": "Input Octets: {{ to_parse_interface[interface].counters.in_octets | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_unicast_pkts is defined %}
+        { 
+            "id": "Input Unicast: {{ to_parse_interface[interface].counters.in_unicast_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_unknown_protos is defined %}
+        { 
+            "id": "Input Unknown: {{ to_parse_interface[interface].counters.in_unknown_protos | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.in_pkts is defined %}
+        { 
+            "id": "Input Total: {{ to_parse_interface[interface].counters.in_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_broadcast_pkts is defined %}
+        { 
+            "id": "Output Broadcast: {{ to_parse_interface[interface].counters.out_broadcast_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_discard is defined %}
+        { 
+            "id": "Output Discards: {{ to_parse_interface[interface].counters.out_discard | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_errors is defined %}
+        { 
+            "id": "Output Errors: {{ to_parse_interface[interface].counters.out_errors | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_mac_pause_frames is defined %}
+        { 
+            "id": "Output MAC Pause Frames: {{ to_parse_interface[interface].counters.out_mac_pause_frames | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_mac_pause_frames is defined %}
+        { 
+            "id": "Output Multicast: {{ to_parse_interface[interface].counters.out_multicast_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_unicast_pkts is defined %}
+        { 
+            "id": "Output Unicast: {{ to_parse_interface[interface].counters.out_unicast_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.out_pkts is defined %}
+        { 
+            "id": "Output Total: {{ to_parse_interface[interface].counters.out_pkts | default("N/A") }}"
+        },{% endif %}{% if to_parse_interface[interface].counters.last_clear is defined %}
+        { 
+            "id": "Last Cleared: {{ to_parse_interface[interface].counters.last_clear | default("N/A") }}"
+        },{% endif %}{% endif %}
+        {
+            "id": "Rate"
+        },{% if to_parse_interface[interface].rate is defined %}
+        { 
+            "id": "Input Rate: {{ to_parse_interface[interface].rate.in_rate | default("N/A") }}"
+        },
+        { 
+            "id": "Load Interval: {{ to_parse_interface[interface].rate.load_interval | default("N/A") }}"
+        },
+        { 
+            "id": "Output Rate: {{ to_parse_interface[interface].rate.out_rate | default("N/A") }}"
+        },{% endif %}                
+        { 
+            "id": "{{ interface }}"{% if interface_loop.last %}
+        }{% else %}
+        },{% endif %}{% endfor %}
+    ],
+    "links": [{% for interface in to_parse_interface %}{% set interface_loop = loop %}{% if to_parse_interface[interface].description is defined %}
+        {
+            "source": "{{ interface }}",
+            "target": "Description: {{ to_parse_interface[interface].description | default("N/A") }}",
+            "cost": 1                 
+        },{% endif %}{% if to_parse_interface[interface].enabled is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Enabled: {{ to_parse_interface[interface].enabled | default("N/A") }}",
+            "cost": 1             
+        },{% endif %}{% if to_parse_interface[interface].oper_status is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Operational Status: {{ to_parse_interface[interface].oper_status | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].access_vlan is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Access VLAN: {{ to_parse_interface[interface].access_vlan | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].native_vlan is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Native VLAN: {{ to_parse_interface[interface].native_vlan | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].switchport_enable is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Switchport Enable: {{ to_parse_interface[interface].switchport_enable | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].switchport_mode is defined %}
+        { 
+            "source": "Switchport Enable: {{ to_parse_interface[interface].switchport_enable | default("N/A") }}",
+            "target": "Switchport Mode: {{ to_parse_interface[interface].switchport_mode | default("N/A") }}",
+            "cost": 1            
+        },{% endif %}{% if to_parse_interface[interface].type is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Type: {{ to_parse_interface[interface].type | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].bandwidth is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Bandwidth: {{ to_parse_interface[interface].bandwidth | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].auto_negotiate is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Auto Negotiate: {{ to_parse_interface[interface].auto_negotiate | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].port_speed is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Port Speed: {{ to_parse_interface[interface].port_speed | default("N/A") }}",
+            "cost": 1 
+        },{% endif %}{% if to_parse_interface[interface].duplex_mode is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Duplex: {{ to_parse_interface[interface].duplex_mode | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].mtu is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "MTU: {{ to_parse_interface[interface].mtu | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].mac_address is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "MAC Address: {{ to_parse_interface[interface].mac_address | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].phys_address is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Physical Address: {{ to_parse_interface[interface].phys_address | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].ipv4 is defined %}{% for ip_address in to_parse_interface[interface].ipv4 %}
+        { 
+            "source": "{{ interface }}",
+            "target": "IP Address: {{ ip_address }}",
+            "cost": 1
+        },{% endfor %}{% endif %}{% if to_parse_interface[interface].medium is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Medium: {{ to_parse_interface[interface].medium | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].delay is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Delay: {{ to_parse_interface[interface].delay | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].encapsulation is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Encapsulation: {{ to_parse_interface[interface].encapsulation.encapsulation | default("N/A") }}",
+            "cost": 1
+        },{% endif %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Flow Control",
+            "cost": 1
+        },{% if to_parse_interface[interface].flow_control is defined %}
+        { 
+            "source": "Flow Control",
+            "target": "Flow Control Receive: {{ to_parse_interface[interface].flow_control.receive | default("N/A") }}",
+            "cost": 1
+        },
+        { 
+            "source": "Flow Control",
+            "target": "Flow Control Send: {{ to_parse_interface[interface].flow_control.send | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].port_channel is defined %}{% if to_parse_interface[interface].port_channel.port_channel_member_intfs is defined %}{% for member in to_parse_interface[interface].port_channel.port_channel_member_intfs %}    
+        { 
+            "source": "{{ interface }}",
+            "target": "Port Channel Member: {{ member }}",
+            "cost": 1                        
+        },{% endfor %}{% else %}{% if to_parse_interface[interface].port_channel.port_channel_member is defined %}       
+        { 
+            "source": "{{ interface }}",
+            "target": "Port Channel Member: {{ to_parse_interface[interface].port_channel.port_channel_member }}",
+            "cost": 1                                    
+        },{% endif %}{% endif %}{% endif %}{% if to_parse_interface[interface].last_change is defined %}
+        { 
+            "source": "{{ interface }}",
+            "target": "Last Change: {{ to_parse_interface[interface].last_change | default("N/A") }}",
+            "cost": 1            
+        },{% endif %}
+        {
+            "source": "{{ interface }}",
+            "target": "Counters",
+            "cost": 1                        
+        },{% if to_parse_interface[interface].counters is defined %}{% if to_parse_interface[interface].counters.in_broadcast_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Broadcast: {{ to_parse_interface[interface].counters.in_broadcast_pkts | default("N/A") }}",
+            "cost": 1                                    
+        },{% endif %}{% if to_parse_interface[interface].counters.in_crc_errors is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input CRC Errors: {{ to_parse_interface[interface].counters.in_crc_errors | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.in_errors is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Errors: {{ to_parse_interface[interface].counters.in_errors | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.in_mac_pause_frames is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input MAC Pause Frames: {{ to_parse_interface[interface].counters.in_mac_pause_frames | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.in_multicast_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Multicast: {{ to_parse_interface[interface].counters.in_multicast_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.in_octets is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Octets: {{ to_parse_interface[interface].counters.in_octets | default("N/A") }}",
+            "cost": 1            
+        },{% endif %}{% if to_parse_interface[interface].counters.in_unicast_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Unicast: {{ to_parse_interface[interface].counters.in_unicast_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.in_unknown_protos is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Unknown: {{ to_parse_interface[interface].counters.in_unknown_protos | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.in_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Input Total: {{ to_parse_interface[interface].counters.in_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_broadcast_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output Broadcast: {{ to_parse_interface[interface].counters.out_broadcast_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_discard is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output Discards: {{ to_parse_interface[interface].counters.out_discard | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_errors is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output Errors: {{ to_parse_interface[interface].counters.out_errors | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_mac_pause_frames is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output MAC Pause Frames: {{ to_parse_interface[interface].counters.out_mac_pause_frames | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_mac_pause_frames is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output Multicast: {{ to_parse_interface[interface].counters.out_multicast_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_unicast_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output Unicast: {{ to_parse_interface[interface].counters.out_unicast_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.out_pkts is defined %}
+        { 
+            "source": "Counters",
+            "target": "Output Total: {{ to_parse_interface[interface].counters.out_pkts | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% if to_parse_interface[interface].counters.last_clear is defined %}
+        { 
+            "source": "Counters",
+            "target": "Last Cleared: {{ to_parse_interface[interface].counters.last_clear | default("N/A") }}",
+            "cost": 1
+        },{% endif %}{% endif %}
+        {
+            "source": "{{ interface }}",
+            "target": "Rate",
+            "cost": 1            
+        },{% if to_parse_interface[interface].rate is defined %}
+        {
+            "source": "Rate",
+            "target": "Input Rate: {{ to_parse_interface[interface].rate.in_rate | default("N/A") }}",
+            "cost": 1
+        },
+        { 
+            "source": "Rate",
+            "target": "Load Interval: {{ to_parse_interface[interface].rate.load_interval | default("N/A") }}",
+            "cost": 1
+        },
+        { 
+            "source": "Rate",
+            "target": "Output Rate: {{ to_parse_interface[interface].rate.out_rate | default("N/A") }}",
+            "cost": 1            
+        },{% endif %}                
+        {
+            "source": "{{ device_alias }}",
+            "target": "{{ interface }}",
+            "cost": 1{% if interface_loop.last %}
+        }{% else %}
+        },{% endif %}{% endfor %}
+    ]
+}

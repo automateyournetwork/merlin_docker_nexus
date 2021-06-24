@@ -1,0 +1,72 @@
+{
+    "type": "NetworkGraph",
+    "label": "Show BGP Sessions",
+    "protocol": "OLSR",
+    "version": "0.6.6.2",
+    "metric": "ETX",
+    "nodes": [
+        {
+            "id": "{{ device_alias }}"
+        },{% for vrf in to_parse_bgp.vrf %}{% set vrf_loop = loop %}
+        {
+            "id": "Local AS: {{ to_parse_bgp.local_as }}"
+        },
+        {
+            "id": "Total Established Peers: {{ to_parse_bgp.total_established_peers }}"
+        },
+        {
+            "id": "Total Peers: {{ to_parse_bgp.total_peers }}"
+        },
+        {
+            "id": "VRF: {{ vrf }}"
+        },
+        {
+            "id": "Router ID: {{ to_parse_bgp.vrf[vrf].router_id }}"
+        },
+        {
+            "id": "VRF Established Peers: {{ to_parse_bgp.vrf[vrf].vrf_established_peers }}"
+        },
+        {
+            "id": "VRF Peers: {{ to_parse_bgp.vrf[vrf].vrf_peers }}"{% if vrf_loop.last %}
+        }{% else %}
+        },{% endif %}{% endfor %}
+    ],
+    "links": [{% for vrf in to_parse_bgp.vrf %}{% set vrf_loop = loop %}
+        {
+            "source": "{{ device_alias  }}",
+            "target": "Local AS: {{ to_parse_bgp.local_as }}",
+            "cost": 1
+        },
+        {
+            "source": "{{ device_alias  }}",
+            "target": "Total Established Peers: {{ to_parse_bgp.total_established_peers }}",
+            "cost": 1
+        },
+        {
+            "source": "{{ device_alias  }}",
+            "target": "Total Peers: {{ to_parse_bgp.total_peers }}",
+            "cost": 1
+        },
+        {
+            "source": "{{ device_alias  }}",
+            "target": "VRF: {{ vrf }}",
+            "cost": 1
+        },
+        {
+            "source": "VRF: {{ vrf }}",
+            "target": "Router ID: {{ to_parse_bgp.vrf[vrf].router_id }}",
+            "cost": 1
+        },
+        {
+            "source": "VRF: {{ vrf }}",
+            "target": "VRF Established Peers: {{ to_parse_bgp.vrf[vrf].vrf_established_peers }}",
+            "cost": 1
+        },
+        {
+            "source": "VRF: {{ vrf }}",
+            "target": "VRF Peers: {{ to_parse_bgp.vrf[vrf].vrf_peers }}",
+            "cost": 1{% if vrf_loop.last %}
+        }{% else %}
+        },{% endif %}{% endfor %}        
+    ]
+}
