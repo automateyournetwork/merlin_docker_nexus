@@ -1,0 +1,26 @@
+FROM ubuntu:latest
+
+RUN set -ex \
+  && echo "==> Upgrading apk and system ...." \
+  && apt -y update\
+  && echo "==> Installing Python3 and pip ...." \  
+  && apt-get install python3 -y \
+  && apt install python3-pip -y \
+  && apt install openssh-client -y \
+  \
+  && echo "==> Adding pyATS ..." \
+  && pip install pyats[full] \ 
+  && pip uninstall --yes markupsafe \
+  && pip install markupsafe==1.1.1 \
+  \
+  && echo "==> Adding Rich ..." \
+  && pip install rich
+
+COPY /Camelot/Learned_Routing/* /Camelot/Learned_Routing/
+COPY /templates/cisco/nxos/* /templates/cisco/nxos/
+COPY /testbed/* /testbed/
+COPY /python/* /python/
+
+ENTRYPOINT [ "pyats", "run", "job", "python/Nexus9k_learned_routing_job.py", "--testbed-file" ]
+
+CMD ["testbed/testbed_DevNet_Nexus9k_Sandbox.yaml"]
