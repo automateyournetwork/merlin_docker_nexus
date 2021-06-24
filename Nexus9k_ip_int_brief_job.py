@@ -1,7 +1,7 @@
 '''
 To run the job:
 
-$ pyats run job DevNet_Sandbox_Nexus9k_merlin_docker_job.py --testbed-file testbed/testbed_DevNet_Nexus9k_Sandbox.yaml
+$ pyats run job Nexus9k_ip_int_brief_job.py --testbed-file testbed/testbed_DevNet_Nexus9k_Sandbox.yaml
 
 '''
 
@@ -23,7 +23,7 @@ def main(runtime):
         testbed = runtime.testbed
 
     # Find the location of the script in relation to the job file
-    testscript = os.path.join(os.path.dirname(__file__), 'DevNet_Sandbox_Nexus9k_merlin_docker.py')
+    testscript = os.path.join(os.path.dirname(__file__), 'Nexus9k_ip_int_brief.py')
 
     # run script
     runtime.tasks.run(testscript=testscript, testbed=testbed)

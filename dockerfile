@@ -16,14 +16,14 @@ RUN set -ex \
   && echo "==> Adding Rich ..." \
   && pip install rich
 
-COPY Camelot/Cisco/DevNet_Sandbox/ /Camelot/Cisco/DevNet_Sandbox/
+COPY Camelot/Show_IP_Interface_Brief/* /Camelot/Show_IP_Interface_Brief/
 COPY templates/cisco/nxos/* /templates/cisco/nxos/
 COPY testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
 COPY ascii_art.py ./
-COPY DevNet_Sandbox_Nexus9k_merlin_docker_job.py ./
-COPY DevNet_Sandbox_Nexus9k_merlin_docker.py ./
+COPY Nexus9k_ip_int_brief_job.py ./
+COPY Nexus9k_ip_int_brief.py ./
 COPY general_functionalities.py ./
 
-ENTRYPOINT [ "pyats", "run", "job", "DevNet_Sandbox_Nexus9k_merlin_docker_job.py", "--testbed-file" ]
+ENTRYPOINT [ "pyats", "run", "job", "Nexus9k_ip_int_brief_job.py", "--testbed-file" ]
 
 CMD ["testbed/testbed_DevNet_Nexus9k_Sandbox.yaml"]
