@@ -86,6 +86,7 @@ class Collect_Information(aetest.Testcase):
             # ---------------------------------------         
             with steps.start('Store data',continue_=True) as step:
                 print(Panel.fit(Text.from_markup(WRITING)))
+                print(self.learned_routing)
                 
                 # Learned Routing
                 if self.learned_routing is not None:
@@ -100,7 +101,8 @@ class Collect_Information(aetest.Testcase):
                         parsed_output_type = learned_routing_template.render(to_parse_routing=self.learned_routing['vrf'],filetype_loop_jinja2=filetype)
 
                         with open("Camelot/Learned_Routing/%s_learned_routing.%s" % (device.alias,filetype), "w") as fh:
-                            fh.write(parsed_output_type) 
+                            fh.write(parsed_output_type)
+                                                       
         # Goodbye Banner
         print(Panel.fit(Text.from_markup(FINISHED)))
      

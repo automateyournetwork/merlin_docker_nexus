@@ -86,7 +86,8 @@ class Collect_Information(aetest.Testcase):
             # ---------------------------------------         
             with steps.start('Store data',continue_=True) as step:
                 print(Panel.fit(Text.from_markup(WRITING)))
-                
+                print(self.learned_acl)
+
                 # Learned ACL
                 if self.learned_acl is not None:
                     learned_acl_template = env.get_template('learned_acl.j2')
@@ -100,11 +101,11 @@ class Collect_Information(aetest.Testcase):
                         parsed_output_type = learned_acl_template.render(to_parse_access_list=self.learned_acl['acls'],filetype_loop_jinja2=filetype)
 
                         with open("Camelot/Learned_ACL/%s_learned_acl.%s" % (device.alias,filetype), "w") as fh:
-                            fh.write(parsed_output_type)
+                            fh.write(parsed_output_type)                                                   
 
         # Goodbye Banner
         print(Panel.fit(Text.from_markup(FINISHED)))
-     
+
     def save_to_json_file(self, device, directory, file_name, content):
         file_path = "Camelot/{}/{}_{}.json".format(directory, device.alias, file_name)
         with open(file_path, "w") as json_file:

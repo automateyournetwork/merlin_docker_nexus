@@ -86,7 +86,8 @@ class Collect_Information(aetest.Testcase):
             # ---------------------------------------         
             with steps.start('Store data',continue_=True) as step:
                 print(Panel.fit(Text.from_markup(WRITING)))
-                
+                print(self.learned_arp)
+
                 # Learned ARP
                 if self.learned_arp is not None:
                     learned_arp_template = env.get_template('learned_arp.j2')
@@ -101,7 +102,7 @@ class Collect_Information(aetest.Testcase):
 
                         with open("Camelot/Learned_ARP/%s_learned_arp.%s" % (device.alias,filetype), "w") as fh:
                             fh.write(parsed_output_type) 
-
+                                                      
         # Goodbye Banner
         print(Panel.fit(Text.from_markup(FINISHED)))
      
