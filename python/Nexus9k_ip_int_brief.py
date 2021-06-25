@@ -86,6 +86,7 @@ class Collect_Information(aetest.Testcase):
             with steps.start('Store data',continue_=True) as step:
                 print(Panel.fit(Text.from_markup(WRITING)))
                 
+                print(self.parsed_show_ip_int_brief)
                 # Show ip interface brief
                 if self.parsed_show_ip_int_brief is not None:
                     sh_ip_int_brief_template = env.get_template('show_ip_interface_brief.j2')
@@ -99,7 +100,8 @@ class Collect_Information(aetest.Testcase):
                         parsed_output_type = sh_ip_int_brief_template.render(to_parse_interfaces=self.parsed_show_ip_int_brief['interface'],filetype_loop_jinja2=filetype)
 
                         with open("Camelot/Show_IP_Interface_Brief/%s_show_ip_int_brief.%s" % (device.alias,filetype), "w") as fh:
-                            fh.write(parsed_output_type)
+                            fh.write(parsed_output_type)                                   
+
         # Goodbye Banner
         print(Panel.fit(Text.from_markup(FINISHED)))
      

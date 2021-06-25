@@ -5,18 +5,18 @@ services:
     build: 
       context: ./
       dockerfile: ./docker/Learned_ACL/dockerfile
-  learned_arp:
-    image: johncapobianco/merlin:learned_arp
-    build: 
-      context: ./
-      dockerfile: ./docker/Learned_ARP/dockerfile      
-  learned_routing:
-    image: johncapobianco/merlin:learned_routing
-    build: 
-      context: ./
-      dockerfile: ./docker/Learned_Routing/dockerfile      
-  ip_int_brief:
-    image: johncapobianco/merlin:ip_int_brief
-    build: 
-      context: ./
-      dockerfile: ./docker/IP_Int_Brief/dockerfile
+  #learned_arp:
+  #  image: johncapobianco/merlin:learned_arp
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/Learned_ARP/dockerfile      
+  #learned_routing:
+  #  image: johncapobianco/merlin:learned_routing
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/Learned_Routing/dockerfile      
+  #ip_int_brief:
+  #  image: johncapobianco/merlin:ip_int_brief
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/IP_Int_Brief/dockerfile
