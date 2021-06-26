@@ -19,12 +19,22 @@ services:
     image: johncapobianco/merlin:learned_interface
     build: 
       context: ./
-      dockerfile: ./docker/Learned_Interface/dockerfile            
+      dockerfile: ./docker/Learned_Interface/dockerfile
+  learned_platform:
+    image: johncapobianco/merlin:learned_platform
+    build: 
+      context: ./
+      dockerfile: ./docker/Learned_Platform/dockerfile
   learned_routing:
     image: johncapobianco/merlin:learned_routing
     build: 
       context: ./
-      dockerfile: ./docker/Learned_Routing/dockerfile      
+      dockerfile: ./docker/Learned_Routing/dockerfile
+  learned_vlan:
+    image: johncapobianco/merlin:learned_vlan
+    build: 
+      context: ./
+      dockerfile: ./docker/Learned_VLAN/dockerfile       
   ip_int_brief:
     image: johncapobianco/merlin:ip_int_brief
     build: 
