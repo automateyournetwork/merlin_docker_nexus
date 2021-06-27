@@ -1,16 +1,16 @@
 devices:
-    sbx-n9kv:
-      alias: 'DevNet_Sandbox_Nexus9k'
+    dist-sw01:
+      alias: 'DevNet_Sandbox_Nexus9k_01'
       type: Nexus 9000
       os: 'nxos'
       credentials:
         default:
-          username: admin
-          password: Cisco123
+          username: cisco
+          password: cisco
       connections:        
         cli:
           protocol: ssh
-          ip: 10.10.20.58
+          ip: 10.10.20.177
           port: 22
           arguments:
             connection_timeout: 360
