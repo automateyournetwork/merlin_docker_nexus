@@ -1,0 +1,12 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /templates/cisco/nxos/show_interface_status.j2 /templates/cisco/nxos/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_int_status_job.py /python/
+COPY /python/Nexus9k_int_status.py /python/
+COPY /scripts/int_status.sh /
+COPY /Camelot/Show_Interface_Status/* /Camelot/Show_Interface_Status/
+COPY /Camelot/styles.css /var/www/html/
+
+CMD ["/bin/bash", "/int_status.sh"]

@@ -1,0 +1,12 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /templates/cisco/nxos/show_vrf.j2 /templates/cisco/nxos/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_vrf_job.py /python/
+COPY /python/Nexus9k_vrf.py /python/
+COPY /scripts/vrf.sh /
+COPY /Camelot/Show_VRF/* /Camelot/Show_VRF/
+COPY /Camelot/styles.css /var/www/html/
+
+CMD ["/bin/bash", "/vrf.sh"]

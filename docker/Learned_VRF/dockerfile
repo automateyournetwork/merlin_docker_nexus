@@ -1,26 +1,12 @@
-FROM ubuntu:latest
+FROM johncapobianco/merlin:base_image
 
-RUN set -ex \
-  && echo "==> Upgrading apk and system ...." \
-  && apt -y update\
-  && echo "==> Installing Python3 and pip ...." \  
-  && apt-get install python3 -y \
-  && apt install python3-pip -y \
-  && apt install openssh-client -y \
-  \
-  && echo "==> Adding pyATS ..." \
-  && pip install pyats[full] \ 
-  && pip uninstall --yes markupsafe \
-  && pip install markupsafe==1.1.1 \
-  \
-  && echo "==> Adding Rich ..." \
-  && pip install rich
-
+COPY /templates/cisco/nxos/learned_vrf.j2 /templates/cisco/nxos/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_learned_vrf_job.py /python/
+COPY /python/Nexus9k_learned_vrf.py /python/
+COPY /scripts/learned_vrf.sh /
 COPY /Camelot/Learned_VRF/* /Camelot/Learned_VRF/
-COPY /templates/cisco/nxos/* /templates/cisco/nxos/
-COPY /testbed/* /testbed/
-COPY /python/* /python/
+COPY /Camelot/styles.css /var/www/html/
 
-ENTRYPOINT [ "pyats", "run", "job", "python/Nexus9k_learned_vrf_job.py", "--testbed-file" ]
-
-CMD ["testbed/testbed_DevNet_Nexus9k_Sandbox.yaml"]
+CMD ["/bin/bash", "/learned_vrf.sh"]

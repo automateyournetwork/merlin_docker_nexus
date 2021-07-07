@@ -14,14 +14,10 @@ import time
 import json
 import shutil
 import logging
-from rich import print
-from rich.panel import Panel
-from rich.text import Text
 from pyats import aetest
 from pyats import topology
 from pyats.log.utils import banner
 from jinja2 import Environment, FileSystemLoader
-from ascii_art import GREETING, LEARN, RUNNING, WRITING, FINISHED
 from general_functionalities import ParseShowCommandFunction, ParseLearnFunction, ParseConfigFunction, ParseDictFunction
 
 # ----------------
@@ -51,7 +47,6 @@ class common_setup(aetest.CommonSetup):
     @aetest.subsection
     def connect_to_devices(self, testbed):
         """Connect to all the devices"""
-        print(Panel.fit(Text.from_markup(GREETING)))
         testbed.connect(learn_hostname=True)
 
 # ----------------
@@ -69,43 +64,33 @@ class Collect_Information(aetest.Testcase):
         for device in testbed:
 
             # ---------------------------------------
-            # Genie learn().info for various functions
-            # ---------------------------------------
-            print(Panel.fit(Text.from_markup(LEARN)))
-
-            # ---------------------------------------
             # Execute parser for various show commands
             # ---------------------------------------
-            print(Panel.fit(Text.from_markup(RUNNING)))
-
-            # Show Access-Lists
-            self.parsed_show_access_lists = ParseShowCommandFunction.parse_show_command(steps, device, "show access-lists")
+            self.parsed_show_version = ParseShowCommandFunction.parse_show_command(steps, device, "show version")
 
             # ---------------------------------------
             # Create JSON, YAML, CSV, MD, HTML, HTML Mind Map files from the Parsed Data
             # ---------------------------------------         
-            with steps.start('Store data',continue_=True) as step:
-                print(Panel.fit(Text.from_markup(WRITING)))
-                
-                print(self.parsed_show_access_lists)
-                # Show ip interface brief
-                if self.parsed_show_access_lists is not None:
-                    sh_access_lists_template = env.get_template('show_access_lists.j2')
+            with steps.start('Store data',continue_=True) as step:              
+                print(self.parsed_show_version)
+                if self.parsed_show_version is not None:
+                    sh_version_template = env.get_template('show_version.j2')
 
-                    directory = "Show_Access_Lists"
-                    file_name = "show_access_lists"
-                    self.save_to_json_file(device, directory, file_name, self.parsed_show_access_lists)
-                    self.save_to_yaml_file(device, directory, file_name, self.parsed_show_access_lists)              
+                    directory = "Show_Version"
+                    file_name = "show_version"
+                    self.save_to_json_file(device, directory, file_name, self.parsed_show_version)
+                    self.save_to_yaml_file(device, directory, file_name, self.parsed_show_version)              
                     
                     for filetype in filetype_loop:
-                        parsed_output_type = sh_access_lists_template.render(to_parse_access_list=self.parsed_show_access_lists,filetype_loop_jinja2=filetype)
+                        parsed_output_type = sh_version_template.render(to_parse_version=self.parsed_show_version['platform'],device_alias = device.alias,filetype_loop_jinja2=filetype)
 
-                        with open("Camelot/Show_IP_Interface_Brief/%s_show_access_lists.%s" % (device.alias,filetype), "w") as fh:
+                        with open("Camelot/Show_Version/%s_show_version.%s" % (device.alias,filetype), "w") as fh:
                             fh.write(parsed_output_type)                                   
 
-        # Goodbye Banner
-        print(Panel.fit(Text.from_markup(FINISHED)))
-     
+                        if filetype == "html":
+                            with open("/var/www/html/index.html", "w") as fh:
+                                fh.write(parsed_output_type) 
+    
     def save_to_json_file(self, device, directory, file_name, content):
         file_path = "Camelot/{}/{}_{}.json".format(directory, device.alias, file_name)
         with open(file_path, "w") as json_file:

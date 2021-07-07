@@ -6,8 +6,8 @@
 | --------- | ---------- | ------ |{% for interface in to_parse_interfaces %}{% if to_parse_interfaces[interface].vlan_id is defined %}{% for vlan_id in to_parse_interfaces[interface].vlan_id %}
 | {{ interface }} | {{ to_parse_interfaces[interface].vlan_id[vlan_id].ip_address }} | {{ to_parse_interfaces[interface].vlan_id[vlan_id].interface_status }} |{% endfor %}{% else %}
 | {{ interface }} | {{ to_parse_interfaces[interface].ip_address }} | {{ to_parse_interfaces[interface].interface_status }} |{% endif %}{% endfor %}{% else %}
-<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
-<h1>Show IP Interface Brief</h1>
+<html><head><link rel="stylesheet" href="../styles.css"></head><body>
+<h1>Show IP Interface Brief for {{ device_alias }}</h1>
 <table class="merlin-table">
   <thead>
   <tr>
@@ -19,14 +19,46 @@
   <tbody>{% for interface in to_parse_interfaces %}{% if to_parse_interfaces[interface].vlan_id is defined %}{% for vlan_id in to_parse_interfaces[interface].vlan_id %}
   <tr>
     <td>{{ interface }}</td>
-    <td>{{ to_parse_interfaces[interface].vlan_id[vlan_id].ip_address }}</td>
-    <td>{{ to_parse_interfaces[interface].vlan_id[vlan_id].interface_status }}</td>
+    <td>{{ to_parse_interfaces[interface].vlan_id[vlan_id].ip_address }}</td>{% if to_parse_interfaces[interface].vlan_id[vlan_id].interface_status == "protocol-up/link-up/admin-up" %}
+    <td style="background-color:#00FF00">{{ to_parse_interfaces[interface].vlan_id[vlan_id].interface_status }}</td>{% else %}
+    <td style="background-color:#FF0000">{{ to_parse_interfaces[interface].vlan_id[vlan_id].interface_status }}</td>{% endif %}
   </tr>{% endfor %}{% else %}
   <tr>
     <td>{{ interface }}</td>
-    <td>{{ to_parse_interfaces[interface].ip_address }}</td>
-    <td>{{ to_parse_interfaces[interface].interface_status }}</td>
+    <td>{{ to_parse_interfaces[interface].ip_address }}</td>{% if to_parse_interfaces[interface].interface_status == "protocol-up/link-up/admin-up" %}
+    <td style="background-color:#00FF00">{{ to_parse_interfaces[interface].interface_status }}</td>{% else %}
+    <td style="background-color:#FF0000">{{ to_parse_interfaces[interface].interface_status }}</td>{% endif %}    
   </tr>{% endif %}{% endfor %}
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_ip_int_brief.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_ip_int_brief.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_ip_int_brief.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_ip_int_brief.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
   </tbody>  
 </table>
 </body></html>{% endif %}{% endif %}

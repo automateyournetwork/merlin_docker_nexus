@@ -1,0 +1,12 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /templates/cisco/nxos/show_ip_route.j2 /templates/cisco/nxos/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_ip_route_job.py /python/
+COPY /python/Nexus9k_ip_route.py /python/
+COPY /scripts/ip_route.sh /
+COPY /Camelot/Show_IP_Route/* /Camelot/Show_IP_Route/
+COPY /Camelot/styles.css /var/www/html/
+
+CMD ["/bin/bash", "/ip_route.sh"]

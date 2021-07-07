@@ -14,14 +14,10 @@ import time
 import json
 import shutil
 import logging
-from rich import print
-from rich.panel import Panel
-from rich.text import Text
 from pyats import aetest
 from pyats import topology
 from pyats.log.utils import banner
 from jinja2 import Environment, FileSystemLoader
-from ascii_art import GREETING, LEARN, RUNNING, WRITING, FINISHED
 from general_functionalities import ParseShowCommandFunction, ParseLearnFunction, ParseConfigFunction, ParseDictFunction
 
 # ----------------
@@ -51,7 +47,6 @@ class common_setup(aetest.CommonSetup):
     @aetest.subsection
     def connect_to_devices(self, testbed):
         """Connect to all the devices"""
-        print(Panel.fit(Text.from_markup(GREETING)))
         testbed.connect(learn_hostname=True)
 
 # ----------------
@@ -69,26 +64,17 @@ class Collect_Information(aetest.Testcase):
         for device in testbed:
 
             # ---------------------------------------
-            # Genie learn().info for various functions
+            # Execute learn for various functions
             # ---------------------------------------
-            print(Panel.fit(Text.from_markup(LEARN)))
-
-            # ---------------------------------------
-            # Execute parser for various show commands
-            # ---------------------------------------
-            print(Panel.fit(Text.from_markup(RUNNING)))
-
-            # platform
-            self.learned_platform = ParseConfigFunction.parse_learn(steps, device, "platform")
+            # Platform
+            self.learned_platform = ParseDictFunction.parse_learn(steps, device, "platform")
 
             # ---------------------------------------
             # Create JSON, YAML, CSV, MD, HTML, HTML Mind Map files from the Parsed Data
             # ---------------------------------------         
-            with steps.start('Store data',continue_=True) as step:
-                print(Panel.fit(Text.from_markup(WRITING)))
+            with steps.start('Store data',continue_=True) as step:              
                 print(self.learned_platform)
-
-                # Learned platform
+                # Learned Platform
                 if self.learned_platform is not None:
                     learned_platform_template = env.get_template('learned_platform.j2')
                     directory = "Learned_Platform"
@@ -101,11 +87,12 @@ class Collect_Information(aetest.Testcase):
                         parsed_output_type = learned_platform_template.render(to_parse_platform=self.learned_platform,filetype_loop_jinja2=filetype)
 
                         with open("Camelot/Learned_Platform/%s_learned_platform.%s" % (device.alias,filetype), "w") as fh:
-                            fh.write(parsed_output_type)                                                   
+                            fh.write(parsed_output_type)                                  
 
-        # Goodbye Banner
-        print(Panel.fit(Text.from_markup(FINISHED)))
-
+                        if filetype == "html":
+                            with open("/var/www/html/index.html", "w") as fh:
+                                fh.write(parsed_output_type) 
+    
     def save_to_json_file(self, device, directory, file_name, content):
         file_path = "Camelot/{}/{}_{}.json".format(directory, device.alias, file_name)
         with open(file_path, "w") as json_file:

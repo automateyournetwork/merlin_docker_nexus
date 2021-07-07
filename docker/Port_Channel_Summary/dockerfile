@@ -1,0 +1,12 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /templates/cisco/nxos/show_port_channel_summary.j2 /templates/cisco/nxos/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_port_channel_summary_job.py /python/
+COPY /python/Nexus9k_port_channel_summary.py /python/
+COPY /scripts/port_channel_summary.sh /
+COPY /Camelot/Show_Port_Channel_Summary/* /Camelot/Show_Port_Channel_Summary/
+COPY /Camelot/styles.css /var/www/html/
+
+CMD ["/bin/bash", "/port_channel_summary.sh"]

@@ -1,0 +1,16 @@
+FROM ubuntu:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN echo "==> Upgrading apk and system ...." \
+ && apt -y update
+
+RUN echo "==> Adding Apache2 ..." \
+ && apt-get install -y apache2
+
+COPY /Camelot/styles.css /var/www/html/
+COPY /Camelot/index.html /var/www/html/
+
+CMD ["apachectl", "-D", "FOREGROUND"]
+
+EXPOSE 80

@@ -6,9 +6,10 @@
 | --- | -------------- | ----- | ------ | ------ | -------------- | -------- | -------------------| ---------------- | --------------- |{% for vrf in to_parse_routing.vrf %}{% for address_family in to_parse_routing.vrf[vrf].address_family %}{% for route in to_parse_routing.vrf[vrf].address_family[address_family].routes %}{% if to_parse_routing.vrf[vrf].address_family[address_family].routes[route].next_hop is defined %}{% for next_hop in to_parse_routing.vrf[vrf].address_family[address_family].routes.next_hop %}
 | {{ vrf }} | {{ address_family }} | {{ route }} | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].active }} | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].metric }} | {{ next_hop }} | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].next_hop.next_hop_list[next_hop].next_hop }} | N/A | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].route_preference }} | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].source_protocol }} |{% endfor %}{% else %}{% for outgoing_interface in to_parse_routing.vrf[vrf].address_family[address_family].routes[route].next_hop.outgoing_interface %}
 | {{ vrf }} | {{ address_family }} | {{ route }} | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].active }} | N/A | N/A | N/A | {{ outgoing_interface }} | N/A | {{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].source_protocol }} |{% endfor %}{% endif %}{% endfor %}{% endfor %}{% endfor %}{% else %}
-<html><body>
+<html><head><link rel="stylesheet" href="../styles.css"></head><body>
 <h1>Learn Routing</h1>
-<table style="width:100%">
+<table class="merlin-table">
+  <thead>
   <tr>
     <th>VRF</th>
     <th>Address Family</th>
@@ -21,6 +22,8 @@
     <th>Route Preference</th>
     <th>Source Protocol</th>
   </tr>{% for vrf in to_parse_routing.vrf %}{% for address_family in to_parse_routing.vrf[vrf].address_family %}{% for route in to_parse_routing.vrf[vrf].address_family[address_family].routes %}{% if to_parse_routing.vrf[vrf].address_family[address_family].routes[route].next_hop is defined %}{% for next_hop in to_parse_routing.vrf[vrf].address_family[address_family].routes[route].next_hop.next_hop_list %}
+  </thead>
+  <tbody>
   <tr>
     <td>{{ vrf }}</td>
     <td>{{ address_family }}</td>
@@ -43,5 +46,36 @@
     <td>N/A</td>
     <td>{{ to_parse_routing.vrf[vrf].address_family[address_family].routes[route].source_protocol }}</td> 
   </tr>{% endfor %}{% endif %}{% endfor %}{% endfor %}{% endfor %}
+  </tbody>
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_routing.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_routing.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_routing.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_routing.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
+  </tbody>  
 </table>
 </body></html>{% endif %}{% endif %}

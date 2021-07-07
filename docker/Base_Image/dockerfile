@@ -1,0 +1,23 @@
+FROM ubuntu:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN echo "==> Upgrading apk and system ...." \
+ && apt -y update
+
+RUN echo "==> Installing Python3 and pip ...." \  
+ && apt-get install python3 -y \
+ && apt install python3-pip -y \
+ && apt install openssh-client -y
+
+RUN echo "==> Adding pyATS ..." \
+ && pip install pyats[full] \ 
+ && pip uninstall --yes markupsafe \
+ && pip install markupsafe==1.1.1
+
+RUN echo "==> Adding Apache2 ..." \
+ && apt-get install -y apache2
+
+COPY /Camelot/styles.css /var/www/html/
+
+EXPOSE 80

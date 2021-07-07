@@ -1,0 +1,12 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /templates/cisco/nxos/show_mac_address_table.j2 /templates/cisco/nxos/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_mac_address_table_job.py /python/
+COPY /python/Nexus9k_mac_address_table.py /python/
+COPY /scripts/mac_address_table.sh /
+COPY /Camelot/Show_MAC_Address_Table/* /Camelot/Show_MAC_Address_Table/
+COPY /Camelot/styles.css /var/www/html/
+
+CMD ["/bin/bash", "/mac_address_table.sh"]
