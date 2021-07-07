@@ -1,0 +1,57 @@
+{% if (filetype_loop_jinja2 == "csv") or (filetype_loop_jinja2 == "xlsx") %}VRF,Reason,ID,State{% for vrf in to_parse_vrf %}
+{{ vrf }},{{ to_parse_vrf[vrf].reason }},{{ to_parse_vrf[vrf].vrf_id }},{{ to_parse_vrf[vrf].vrf_state }}{% endfor %}{% else %}{% if filetype_loop_jinja2 == "md" %}
+# Show VRF
+| VRF | Reason | ID | State |
+| --- | ------ | -- | ----- |{% for vrf in to_parse_vrf %}
+| {{ vrf }} | {{ to_parse_vrf[vrf].reason }} | {{ to_parse_vrf[vrf].vrf_id }} | {{ to_parse_vrf[vrf].vrf_state }} |{% endfor %}{% else %}
+<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
+<h1>Show VRF</h1>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>VRF</th>
+    <th>Reason</th>
+    <th>ID</th>
+    <th>State</th>
+  </tr>
+  </thead>
+  <tbody>{% for vrf in to_parse_vrf %}
+  <tr>
+    <td>{{ vrf }}</td>
+    <td>{{ to_parse_vrf[vrf].reason }}</td>
+    <td>{{ to_parse_vrf[vrf].vrf_id }}</td>
+    <td>{{ to_parse_vrf[vrf].vrf_state }}</td>
+  </tr>{% endfor %}
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_vrf.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_vrf.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_vrf.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_vrf.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
+  </tbody>  
+</table>
+</body></html>{% endif %}{% endif %}

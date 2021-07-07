@@ -8,7 +8,7 @@ N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,{{ to_pa
 | {{ to_parse_platform.rtr_type | default("N/A") }} | {{ to_parse_platform.chassis | default("N/A") }} | {{ to_parse_platform.chassis_sn | default("N/A") }} | {{ to_parse_platform.rp_uptime | default("N/A") }} | {{ to_parse_platform.dir | default("N/A") }} | {{ to_parse_platform.disk_total_space | default("N/A") }} | {{ to_parse_platform.disk_used_space | default("N/A") }} | {{ to_parse_platform.disk_free_space | default("N/A") }} | {{ to_parse_platform.image | default("N/A") }} | {{ to_parse_platform.main_mem | default("N/A") }} | {{ to_parse_platform.os | default("N/A") }} | {{ to_parse_platform.version | default("N/A") }} | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |{% for slot in to_parse_platform.slot %}{% for sub_slot in to_parse_platform.slot[slot] %}
 | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | {{ to_parse_platform.slot[slot][sub_slot].name | default("N/A") }} | {{ to_parse_platform.slot[slot][sub_slot].sn | default("N/A") }} | {{ to_parse_platform.slot[slot][sub_slot].state | default("N/A") }} | {% if slot == "rp" %}{{ to_parse_platform.slot[slot][sub_slot].redundancy_state | default("N/A") }} | {{ to_parse_platform.slot[slot][sub_slot].rp_boot_image | default("N/A") }} | {{ to_parse_platform.slot[slot][sub_slot].rp_uptime | default("N/A") }} | {% else %}N/A | N/A | N/A | {% endif %}N/A | N/A | N/A | N/A | N/A |{% endfor %}{% endfor %}{% for virtual_device in to_parse_platform.virtual_device %}{% for interface in to_parse_platform.virtual_device[virtual_device].membership %}
 | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | {{ to_parse_platform.virtual_device[virtual_device].vd_name | default("N/A") }} | {{ to_parse_platform.virtual_device[virtual_device].vd_status | default("N/A") }} | {{ interface }} | {{ to_parse_platform.virtual_device[virtual_device].membership[interface].type | default("N/A") }} | {{ to_parse_platform.virtual_device[virtual_device].membership[interface].status | default("N/A") }} |{% endfor %}{% endfor %}{% else %}
-<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
+<html><head><link rel="stylesheet" href="../styles.css"></head><body>
 <h1>Learn Platform</h1>
 <table class="merlin-table">
   <thead>
@@ -117,6 +117,36 @@ N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,{{ to_pa
     <td>{{ to_parse_platform.virtual_device[virtual_device].membership[interface].type | default("N/A") }}</td>
     <td>{{ to_parse_platform.virtual_device[virtual_device].membership[interface].status | default("N/A") }}</td>
   </tr>{% endfor %}{% endfor %}
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_platform.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_platform.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_platform.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_learned_platform.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
   </tbody>  
 </table>
 </body></html>{% endif %}{% endif %}

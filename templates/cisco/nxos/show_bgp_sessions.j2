@@ -1,0 +1,63 @@
+{% if filetype_loop_jinja2 == "csv" %}Local AS,Total Established Peers,Total Peers,VRF,Router ID,VRF Established Peers,VRF Peers{% for vrf in to_parse_bgp.vrf %}
+{{ to_parse_bgp.local_as }},{{ to_parse_bgp.total_established_peers }},{{ to_parse_bgp.total_peers }},{{ vrf }},{{ to_parse_bgp.vrf[vrf].router_id }},{{ to_parse_bgp.vrf[vrf].vrf_established_peers }},{{ to_parse_bgp.vrf[vrf].vrf_peers }}{% endfor %}{% else %}{% if filetype_loop_jinja2 == "md" %}
+# Show BGP Sessions
+| Local AS | Total Established Peers | Total Peers | VRF | Router ID | VRF Established Peers | VRF Peers |
+| -------- | ----------------------- | ----------- | --- | --------- | --------------------- | --------- |{% for vrf in to_parse_bgp.vrf %}
+| {{ to_parse_bgp.local_as }} | {{ to_parse_bgp.total_established_peers }} | {{ to_parse_bgp.total_peers }} | {{ vrf }} | {{ to_parse_bgp.vrf[vrf].router_id }} | {{ to_parse_bgp.vrf[vrf].vrf_established_peers }} | {{ to_parse_bgp.vrf[vrf].vrf_peers }} |{% endfor %}{% else %}
+<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
+<h1>Show BGP Sessions</h1>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>Local AS</th>
+    <th>Total Established Peers</th>
+    <th>Total Peers</th>
+    <th>VRF</th>
+    <th>Router ID</th>
+    <th>VRF Established Peers</th>
+    <th>VRF Peers</th>
+  </tr>
+  </thead>
+  <tbody>{% for vrf in to_parse_bgp.vrf %}
+<tr>
+    <td>{{ to_parse_bgp.local_as }}</td>
+    <td>{{ to_parse_bgp.total_established_peers }}</td>
+    <td>{{ to_parse_bgp.total_peers }}</td>
+    <td>{{ vrf }}</td>
+    <td>{{ to_parse_bgp.vrf[vrf].router_id }}</td>
+    <td>{{ to_parse_bgp.vrf[vrf].vrf_established_peers }}</td>
+    <td>{{ to_parse_bgp.vrf[vrf].vrf_peers }}</td>
+  </tr>{% endfor %}
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_bgp_sessions.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_bgp_sessions.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_bgp_sessions.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_bgp_sessions.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
+  </tbody>  
+</table>
+</body></html>{% endif %}{% endif %}

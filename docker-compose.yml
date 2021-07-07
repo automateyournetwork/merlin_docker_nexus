@@ -1,57 +1,168 @@
-version: '3.8'
-services:
+version: '3'
+services:        
+  base_image:
+    image: johncapobianco/merlin:base_image
+    build: 
+      context: ./
+      dockerfile: ./docker/Base_Image/dockerfile
+  docker_homepage:
+    image: johncapobianco/merlin:docker_homepage
+    build: 
+      context: ./
+      dockerfile: ./docker/Homepage/dockerfile
+    ports:
+      - "8080:80"       
   learned_acl:
     image: johncapobianco/merlin:learned_acl
     build: 
       context: ./
       dockerfile: ./docker/Learned_ACL/dockerfile
+    ports:
+      - "8081:80"
   learned_arp:
     image: johncapobianco/merlin:learned_arp
     build: 
       context: ./
       dockerfile: ./docker/Learned_ARP/dockerfile
+    ports:
+      - "8082:80"
   learned_bgp:
     image: johncapobianco/merlin:learned_bgp
     build: 
       context: ./
-      dockerfile: ./docker/Learned_BGP/dockerfile            
+      dockerfile: ./docker/Learned_BGP/dockerfile
+    ports:
+      - "8083:80"
+  learned_config:
+    image: johncapobianco/merlin:learned_config
+    build: 
+      context: ./
+      dockerfile: ./docker/Learned_Config/dockerfile
+    ports:
+      - "8084:80"
   learned_interface:
     image: johncapobianco/merlin:learned_interface
     build: 
       context: ./
       dockerfile: ./docker/Learned_Interface/dockerfile
+    ports:
+      - "8085:80"
+  learned_ospf:
+    image: johncapobianco/merlin:learned_ospf
+    build: 
+      context: ./
+      dockerfile: ./docker/Learned_OSPF/dockerfile
+    ports:
+      - "8086:80"      
   learned_platform:
     image: johncapobianco/merlin:learned_platform
     build: 
       context: ./
       dockerfile: ./docker/Learned_Platform/dockerfile
+    ports:
+      - "8087:80"
   learned_routing:
     image: johncapobianco/merlin:learned_routing
     build: 
       context: ./
       dockerfile: ./docker/Learned_Routing/dockerfile
+    ports:
+      - "8088:80"
   learned_vlan:
     image: johncapobianco/merlin:learned_vlan
     build: 
       context: ./
       dockerfile: ./docker/Learned_VLAN/dockerfile
+    ports:
+      - "8089:80"
   learned_vrf:
     image: johncapobianco/merlin:learned_vrf
     build: 
       context: ./
-      dockerfile: ./docker/Learned_VRF/dockerfile       
-  access_lists:
-    image: johncapobianco/merlin:access_lists
-    build: 
-      context: ./
-      dockerfile: ./docker/Access_Lists/dockerfile
+      dockerfile: ./docker/Learned_VRF/dockerfile
+    ports:
+      - "8090:80"
   bgp_process_vrf_all:
     image: johncapobianco/merlin:bgp_process_vrf_all
     build: 
       context: ./
-      dockerfile: ./docker/BGP_Process_VRF_All/dockerfile            
+      dockerfile: ./docker/BGP_Process_VRF_All/dockerfile
+    ports:
+      - "8091:80"
+  bgp_sessions:
+    image: johncapobianco/merlin:bgp_sessions
+    build: 
+      context: ./
+      dockerfile: ./docker/BGP_Sessions/dockerfile
+    ports:
+      - "8092:80"
+  interface_status:
+    image: johncapobianco/merlin:interface_status
+    build: 
+      context: ./
+      dockerfile: ./docker/Interface_Status/dockerfile
+    ports:
+      - "8093:80"
+  inventory:
+    image: johncapobianco/merlin:inventory
+    build: 
+      context: ./
+      dockerfile: ./docker/Inventory/dockerfile
+    ports:
+      - "8094:80"
   ip_int_brief:
     image: johncapobianco/merlin:ip_int_brief
     build: 
       context: ./
       dockerfile: ./docker/IP_Int_Brief/dockerfile
+    ports:
+      - "8095:80"
+  ip_ospf:
+    image: johncapobianco/merlin:ip_ospf
+    build: 
+      context: ./
+      dockerfile: ./docker/IP_OSPF/dockerfile
+    ports:
+      - "8096:80"
+  ip_route:
+    image: johncapobianco/merlin:ip_route
+    build: 
+      context: ./
+      dockerfile: ./docker/IP_Route/dockerfile
+    ports:
+      - "8097:80"
+  mac_address_table:
+    image: johncapobianco/merlin:mac_address_table
+    build: 
+      context: ./
+      dockerfile: ./docker/MAC_Address_Table/dockerfile
+    ports:
+      - "8098:80"
+  port_channel_summary:
+    image: johncapobianco/merlin:port_channel_summary
+    build: 
+      context: ./
+      dockerfile: ./docker/Port_Channel_Summary/dockerfile
+    ports:
+      - "8099:80"
+  version:
+    image: johncapobianco/merlin:version
+    build: 
+      context: ./
+      dockerfile: ./docker/Version/dockerfile
+    ports:
+      - "8100:80"
+  vlan:
+    image: johncapobianco/merlin:vlan
+    build: 
+      context: ./
+      dockerfile: ./docker/VLAN/dockerfile
+    ports:
+      - "8101:80"
+  vrf:
+    image: johncapobianco/merlin:vrf
+    build: 
+      context: ./
+      dockerfile: ./docker/VRF/dockerfile
+    ports:
+      - "8102:80"

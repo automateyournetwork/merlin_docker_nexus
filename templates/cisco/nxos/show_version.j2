@@ -1,0 +1,91 @@
+{% if filetype_loop_jinja2 == "csv" %}Bootflash,Chassis,CPU,Device Name,Memory,Model,Processor Board ID,RP,Slots,Kernel Uptime,Name,OS,Last Reload Reason,BIOS Compile Time,BIOS Version,Kickstart Compile Time,Kickstart Image,Kickstart Version,System Compile Time,System Image File,System Version
+{{ to_parse_version.hardware.bootflash }},{{ to_parse_version.hardware.chassis }},{{ to_parse_version.hardware.cpu }},{{ to_parse_version.hardware.device_name }},{{ to_parse_version.hardware.memory }},{{ to_parse_version.hardware.model }},{{ to_parse_version.hardware.processor_board_id }},{{ to_parse_version.hardware.rp }},{{ to_parse_version.hardware.slots }},{{ to_parse_version.kernel_uptime.days }} {{ to_parse_version.kernel_uptime.hours }} {{ to_parse_version.kernel_uptime.minutes }} {{ to_parse_version.kernel_uptime.seconds }},{{ to_parse_version.name }},{{ to_parse_version.os }},{{ to_parse_version.reason }},{{ to_parse_version.software.bios_compile_time }},{{ to_parse_version.software.bios_version }},{{ to_parse_version.software.kickstart_compile_time }},{{ to_parse_version.software.kickstart_image_file }},{{ to_parse_version.software.kickstart_version }},{{ to_parse_version.software.system_compile_time }},{{ to_parse_version.software.system_image_file }},{{ to_parse_version.software.system_version }}{% else %}{% if filetype_loop_jinja2 == "md" %}
+# Show Version
+| Bootflash | Chassis | CPU | Device Name | Memory | Model | Processor Board ID | RP | Slots | Kernel Uptime | Name | OS | Last Reload Reason | BIOS Compile Time | BIOS Version | Kickstart Compile Time | Kickstart Image | Kickstart Version | System Compile Time | System Image File | System Version |
+| --------- | ------- | --- | ----------- | ------ | ----- | ------------------ | -- | ----- | ------------- | ---- | -- | ------------------ | ----------------- | ------------ | ---------------------- | --------------- | ----------------- | ------------------- | ----------------- | -------------- |
+| {{ to_parse_version.hardware.bootflash }} | {{ to_parse_version.hardware.chassis }} | {{ to_parse_version.hardware.cpu }} | {{ to_parse_version.hardware.device_name }} | {{ to_parse_version.hardware.memory }} | {{ to_parse_version.hardware.model }} | {{ to_parse_version.hardware.processor_board_id }} | {{ to_parse_version.hardware.rp }} | {{ to_parse_version.hardware.slots }} | {{ to_parse_version.kernel_uptime.days }} {{ to_parse_version.kernel_uptime.hours }} {{ to_parse_version.kernel_uptime.minutes }} {{ to_parse_version.kernel_uptime.seconds }} | {{ to_parse_version.name }} | {{ to_parse_version.os }} | {{ to_parse_version.reason }} | {{ to_parse_version.software.bios_compile_time }} | {{ to_parse_version.software.bios_version }} | {{ to_parse_version.software.kickstart_compile_time }} | {{ to_parse_version.software.kickstart_image_file }} | {{ to_parse_version.software.kickstart_version }} | {{ to_parse_version.software.system_compile_time }} | {{ to_parse_version.software.system_image_file }} | {{ to_parse_version.software.system_version }} |{% else %}
+<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
+<h1>Show Version</h1>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>Bootflash</th>
+    <th>Chassis</th>
+    <th>CPU</th>
+    <th>Device Name</th>
+    <th>Memory</th>
+    <th>Model</th>
+    <th>Processor Board ID</th>
+    <th>RP</th>
+    <th>Slots</th>
+    <th>Kernel Uptime</th>
+    <th>Name</th>
+    <th>OS</th>
+    <th>Last Reload Reason</th>
+    <th>BIOS Compile Time</th>
+    <th>BIOS Version</th>
+    <th>Kickstart Compile Time</th>
+    <th>Kickstart Image</th>
+    <th>Kickstart Version</th>
+    <th>System Compile Time</th>
+    <th>System Image File</th>
+    <th>System Version</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>{{ to_parse_version.hardware.bootflash }}</td>
+    <td>{{ to_parse_version.hardware.chassis }}</td>
+    <td>{{ to_parse_version.hardware.cpu }}</td>
+    <td>{{ to_parse_version.hardware.device_name }}</td>
+    <td>{{ to_parse_version.hardware.memory }}</td>
+    <td>{{ to_parse_version.hardware.model }}</td>
+    <td>{{ to_parse_version.hardware.processor_board_id }}</td>
+    <td>{{ to_parse_version.hardware.rp }}</td>
+    <td>{{ to_parse_version.hardware.slots }}</td>
+    <td>{{ to_parse_version.kernel_uptime.days }} {{ to_parse_version.kernel_uptime.hours }} {{ to_parse_version.kernel_uptime.minutes }} {{ to_parse_version.kernel_uptime.seconds }}</td>
+    <td>{{ to_parse_version.name }}</td>
+    <td>{{ to_parse_version.os }}</td>
+    <td>{{ to_parse_version.reason }}</td>
+    <td>{{ to_parse_version.software.bios_compile_time }}</td>
+    <td>{{ to_parse_version.software.bios_version }}</td>
+    <td>{{ to_parse_version.software.kickstart_compile_time }}</td>
+    <td>{{ to_parse_version.software.kickstart_image_file }}</td>
+    <td>{{ to_parse_version.software.kickstart_version }}</td>
+    <td>{{ to_parse_version.software.system_compile_time }}</td>
+    <td>{{ to_parse_version.software.system_image_file }}</td>
+    <td>{{ to_parse_version.software.system_version }}</td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_version.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_version.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_version.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_version.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
+  </tbody>  
+</table>
+</body></html>{% endif %}{% endif %}

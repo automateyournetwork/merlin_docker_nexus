@@ -1,0 +1,61 @@
+{% if filetype_loop_jinja2 == "csv" %}Interface,Status,Type,VLAN,Port Speed,Duplex{% for interface in to_parse_interface.interfaces %}
+{{ interface }},{{ to_parse_interface.interfaces[interface].status }},{{ to_parse_interface.interfaces[interface].type }},{{ to_parse_interface.interfaces[interface].vlan }},{{ to_parse_interface.interfaces[interface].port_speed }},{{ to_parse_interface.interfaces[interface].duplex_code }}{% endfor %}{% else %}{% if filetype_loop_jinja2 == "md" %}
+# Show Interface Status
+| Interface | Status | Type | VLAN | Port Speed | Duplex |
+| --------- | ------ | ---- | ---- | ---------- | ------ |{% for interface in to_parse_interface.interfaces %}
+| {{ interface }} | {{ to_parse_interface.interfaces[interface].status }} | {{ to_parse_interface.interfaces[interface].type }} | {{ to_parse_interface.interfaces[interface].vlan }} | {{ to_parse_interface.interfaces[interface].port_speed }} | {{ to_parse_interface.interfaces[interface].duplex_code }} |{% endfor %}{% else %}
+<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
+<h1>Show Interfaces Status</h1>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>Interface</th>
+    <th>Status</th>
+    <th>Type</th>
+    <th>VLAN</th>
+    <th>Port Speed</th>
+    <th>Duplex</th>
+  </tr>
+  </thead>
+  <tbody>{% for interface in to_parse_interface.interfaces %}
+<tr>
+    <td>{{ interface }}</td>
+    <td>{{ to_parse_interface.interfaces[interface].status }}</td>
+    <td>{{ to_parse_interface.interfaces[interface].type }}</td>
+    <td>{{ to_parse_interface.interfaces[interface].vlan }}</td>
+    <td>{{ to_parse_interface.interfaces[interface].port_speed }}</td>
+    <td>{{ to_parse_interface.interfaces[interface].duplex_code }}</td>    
+  </tr>{% endfor %}
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_int_status.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_int_status.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_int_status.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_show_int_status.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
+  </tbody>  
+</table>
+</body></html>{% endif %}{% endif %}
