@@ -1,0 +1,11 @@
+FROM johncapobianco/merlin:base_image
+
+RUN echo "==> Pip Install Tabulate" \
+ && pip install tabulate
+
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/crc_errors_job.py /python/
+COPY /python/crc_errors.py /python/
+COPY /scripts/crc_errors.sh /
+
+CMD ["/bin/bash", "/crc_errors.sh"]

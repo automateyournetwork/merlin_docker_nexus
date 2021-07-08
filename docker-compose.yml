@@ -166,3 +166,38 @@ services:
       dockerfile: ./docker/VRF/dockerfile
     ports:
       - "8102:80"
+  bgp_check:
+    image: johncapobianco/merlin:bgp_check
+    build: 
+      context: ./
+      dockerfile: ./docker/BGP_Check/dockerfile
+    ports:
+      - "8103:80"      
+  crc_errors:
+    image: johncapobianco/merlin:crc_errors
+    build: 
+      context: ./
+      dockerfile: ./docker/CRC_Errors/dockerfile
+    ports:
+      - "8104:80"      
+  half_duplex:
+    image: johncapobianco/merlin:half_duplex
+    build: 
+      context: ./
+      dockerfile: ./docker/Half_Duplex/dockerfile
+    ports:
+      - "8105:80"
+  ping_test:
+    image: johncapobianco/merlin:ping_test
+    build: 
+      context: ./
+      dockerfile: ./docker/Ping_Test/dockerfile
+    ports:
+      - "8106:80"      
+  run_vs_start:
+    image: johncapobianco/merlin:run_vs_start
+    build: 
+      context: ./
+      dockerfile: ./docker/Run_vs_Start/dockerfile
+    ports:
+      - "8107:80"      

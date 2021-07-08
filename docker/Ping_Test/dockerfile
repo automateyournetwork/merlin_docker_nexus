@@ -1,0 +1,8 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/ping_test_job.py /python/
+COPY /python/ping_test.py /python/
+COPY /scripts/ping_test.sh /
+
+CMD ["/bin/bash", "/ping_test.sh"]
