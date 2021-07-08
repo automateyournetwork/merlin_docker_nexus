@@ -1,0 +1,11 @@
+FROM johncapobianco/merlin:base_image
+
+RUN echo "==> Pip Install Tabulate" \
+ && pip install tabulate
+
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/bgp_check_job.py /python/
+COPY /python/bgp_check.py /python/
+COPY /scripts/bgp_check.sh /
+
+CMD ["/bin/bash", "/bgp_check.sh"]

@@ -1,0 +1,8 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/run_vs_start_job.py /python/
+COPY /python/run_vs_start.py /python/
+COPY /scripts/run_vs_start.sh /
+
+CMD ["/bin/bash", "/run_vs_start.sh"]
