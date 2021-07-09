@@ -1,0 +1,7 @@
+APIs:
+  recommended_release:
+    recommended_release_api_username: {{ YOUR RECOMMENDED RELEASE API USERNAME }}
+    recommended_release_api_password: {{ YOUR API SECRET }}
+  psirt:
+    psirt_api_username: {{ YOUR PSIRT API USERNAME}}
+    psirt_api_password: {{ YOUR PSIRT API SECRET }}

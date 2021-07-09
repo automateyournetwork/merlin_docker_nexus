@@ -1,0 +1,13 @@
+FROM johncapobianco/merlin:base_image
+
+COPY /templates/cisco/api/recommended_release.j2 /templates/cisco/api/
+COPY /api_credentials/cisco.yaml /api_credentials/
+COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
+COPY /python/general_functionalities.py /python/
+COPY /python/Nexus9k_recommended_release_job.py /python/
+COPY /python/Nexus9k_recommended_release.py /python/
+COPY /scripts/recommended_release.sh /
+COPY /Camelot/Recommended_Release/* /Camelot/Recommended_Release/
+COPY /Camelot/styles.css /var/www/html/
+
+CMD ["/bin/bash", "/recommended_release.sh"]

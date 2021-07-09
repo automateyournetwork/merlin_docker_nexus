@@ -141,4 +141,109 @@ Or the YAML
 
 ![Postman YAML](images/postman05.PNG)
 
+Cisco has several APIs to get different information returned in JSON format. Using the Ansible URI Module you can access these APIs, query the JSON output, and create formatted CSV files. 
+
+[Support API](https://developer.cisco.com/site/support-apis/)
+
+* Bug information
+* TAC case information
+* End-of-X information
+* Product information
+* RMA information
+* Software Suggestion (Gold Star)
+
+[Services API](https://developer.cisco.com/docs/service-apis/)
+
+* Contracts and Coverage information
+* Customer information
+* Inventory information
+* Product Alerts (Field Notice, Security Advisory, Security Vulnerability)
+
+[Product Security Incident Reponse Team](https://developer.cisco.com/psirt/)
+
+* Accelerate Cisco Security Vulnerability Assessments
+* Customize Cisco Vulnerability Notifications
+* Use Open Security Standards
+
+[Business Critical Insights](https://developer.cisco.com/docs/business-critical-service-apis/)
+
+BCI portal shows various key performance indicators, trends and predictive analytic insights. The data shown on the portal is now also available through APIs.
+
+## Onboarding Process
+
+### SmartNet Total Care (SNTC)
+
+Cisco account must have API Developer role
+
+1. Log in [Cisco.com](https://cisco.com)
+2. Go to Manage Profile
+3. Smart Services section
+4. API Developer role = Active
+
+If not, click on Contact Company Adminstrator to know who to ask to get it.
+
+### Cisco API console
+
+Create an application add assign APIs
+
+* Log in [Cisco API console](https://apiconsole.cisco.com)
+* Go to My Apps & Keys
+* Register a New App
+
+  * Name of your application: <Name Your Application>
+  * OAuth2.0 Credentials: Client Credentials
+
+* Save
+* Add APIs to the application
+
+  * Software Suggestion API V2
+  * PSIRT
+
+* I agree to the terms and service
+* Save
+
+Please take note of:
+
+* KEY: OAuth2.0 {{ client_id }}
+* CLIENT_SECRET: OAuth2.0 {{ client_secret }}
+
+Once you have your credentials update the /api_credentials/cisco.yaml file
+
+```yaml
+APIs:
+  recommended_release:
+    recommended_release_api_username: {{ YOUR RECOMMENDED RELEASE API USERNAME }}
+    recommended_release_api_password: {{ YOUR API SECRET }}
+  psirt:
+    psirt_api_username: {{ YOUR PSIRT API USERNAME}}
+    psirt_api_password: {{ YOUR PSIRT API SECRET }}
+```
+
+Uncomment out the PSIRT and Recommended Release instructions in the docker-compose.yml file
+
+```yaml
+
+  # YOU NEED TO UPDATE THE api_credentials/cisco.yaml file first with your SNTC API Credentials
+  # THEN YOU NEED TO UPDAT THE IMAGE PATH TO YOUR DOCKERHUB REPO
+  # THEN REMOVE COMMENTS
+  # THEN YOU NEED TO docker-compose build / docker-compose up the images
+  #psirt:
+  #  image: {{ YOUR DOCKER HUB ACCOUNT HERE }}/{{ YOUR DOCKER HUB REPO HERE }}:psirt
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/PSIRT/dockerfile
+  #  ports:
+  #    - "8108:80"
+  #recommended_release:
+  #  image: {{ YOUR DOCKER HUB ACCOUNT HERE }}/{{ YOUR DOCKER HUB REPO HERE }}:recommended_release
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/Recommended_Release/dockerfile
+  #  ports:
+  #    - "8109:80"  
+
+```
+
+Now you have 2 new microservices the PSIRT report and the Recommended Software Release
+
 [Back to the main project](https://github.com/automateyournetwork/merlin)

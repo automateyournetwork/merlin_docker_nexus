@@ -201,3 +201,21 @@ services:
       dockerfile: ./docker/Run_vs_Start/dockerfile
     ports:
       - "8107:80"      
+  # YOU NEED TO UPDATE THE api_credentials/cisco.yaml file first with your SNTC API Credentials
+  # THEN YOU NEED TO UPDAT THE IMAGE PATH TO YOUR DOCKERHUB REPO
+  # THEN REMOVE COMMENTS
+  # THEN YOU NEED TO docker-compose build / docker-compose up the images
+  #psirt:
+  #  image: {{ YOUR DOCKER HUB ACCOUNT HERE }}/{{ YOUR DOCKER HUB REPO HERE }}:psirt
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/PSIRT/dockerfile
+  #  ports:
+  #    - "8108:80"
+  #recommended_release:
+  #  image: {{ YOUR DOCKER HUB ACCOUNT HERE }}/{{ YOUR DOCKER HUB REPO HERE }}:recommended_release
+  #  build: 
+  #    context: ./
+  #    dockerfile: ./docker/Recommended_Release/dockerfile
+  #  ports:
+  #    - "8109:80"      

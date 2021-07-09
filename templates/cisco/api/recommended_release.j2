@@ -1,0 +1,77 @@
+{% if filetype_loop_jinja2 == "csv" %}
+Product PID,Product Name,Software Type,Image Name,Description,Feature Set,Image Size,Suggested,Major Release,Train,Release Name,Release Date,Lifecycle,Installed Version{% for product in to_parse_recommended %}{% for suggestion in product.suggestions %}{% for image in suggestion.images %}
+{{ product.product.basePID }},{{ product.product.productName }},{{ product.product.softwareType }},{{ image.imageName }},{{ image.description }},{{ image.featureSet }},{{ image.imageSize }},{{ suggestion.isSuggested }},{{ suggestion.majorRelease }},{{ suggestion.releaseTrain }},{{ suggestion.relDispName }},{{ suggestion.releaseDate }},{{ suggestion.releaseLifeCycle }},{{ installed_version }}{% endfor %}{% endfor %}{% endfor %}{% else %}{% if filetype_loop_jinja2 == "md" %}
+# Recommended Releases
+| Product PID | Product Name | Software Type | Image Name | Description | Feature Set | Image Size | Suggested | Major Release | Train | Release Name | Release Date | Lifecycle | Installed Version |
+| ----------- | ------------ | ------------- | ---------- | ----------- | ----------- | ---------- | --------- | ------------- | ----- | ------------ | ------------ | --------- | ----------------- |{% for product in to_parse_recommended %}{% for suggestion in product.suggestions %}{% for image in suggestion.images %}
+| {{ product.product.basePID }} | {{ product.product.productName }} | {{ product.product.softwareType }} | {{ image.imageName }} | {{ image.description }} | {{ image.featureSet }} | {{ image.imageSize }} | {{ suggestion.isSuggested }} | {{ suggestion.majorRelease }} | {{ suggestion.releaseTrain }} | {{ suggestion.relDispName }} | {{ suggestion.releaseDate }} | {{ suggestion.releaseLifeCycle }} | {{ installed_version }} |{% endfor %}{% endfor %}{% endfor %}{% else %}
+<html><head><link rel="stylesheet" href="../../../styles.css"></head><body>
+<h1>Recommended Release</h1>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>Product PID</th>
+    <th>Product Name</th>
+    <th>Software Type</th>
+    <th>Image Name</th>
+    <th>Feature Set</th>
+    <th>Image Size</th>
+    <th>Suggested</th>
+    <th>Major Release</th>
+    <th>Release Name</th>
+    <th>Release Date</th>
+    <th>Recommended Version</th>
+    <th>Installed Version</th>
+    <th>Compliant</th>
+  </tr>
+  </thead>
+  <tbody>{% for product in to_parse_recommended %}{% for suggestion in product.suggestions %}{% for image in suggestion.images %}
+  <tr>
+    <td>{{ product.product.basePID }}</td>
+    <td>{{ product.product.productName }}</td>
+    <td>{{ product.product.softwareType }}</td>
+    <td>{{ image.imageName }}</td>
+    <td>{{ image.featureSet }}</td>   
+    <td>{{ image.imageSize }}</td>
+    <td>{{ suggestion.isSuggested }}</td>
+    <td>{{ suggestion.majorRelease }}</td>
+    <td>{{ suggestion.relDispName }}</td>
+    <td>{{ suggestion.releaseDate }}</td>
+    <td>{{ suggestion.releaseFormat1 }}</td>
+    <td>{{ installed_version }}</td>{% if suggestion.releaseFormat1 != installed_version %}
+    <td style="background-color:#FF0000">No</td>{% else %}
+    <td style="background-color:#00FF00">Yes</td>{% endif %}
+  </tr>{% endfor %}{% endfor %}{% endfor %}
+  </tbody>
+</table>
+<table class="merlin-table">
+  <thead>
+  <tr>
+    <th>RAW JSON from pyATS</th>
+    <th>RAW YAML from pyATS</th>
+    <th>CSV File</th>
+    <th>Markdown File</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><a href="/DevNet_Sandbox_Nexus9k_recommended_release.json">RAW JSON File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_recommended_release.yaml">RAW YAML File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_recommended_release.csv">CSV File</a></td>
+    <td><a href="/DevNet_Sandbox_Nexus9k_recommended_release.md">Markdown File</a></td>
+  </tr>
+  </tbody>  
+</table>
+<table class="merlin-table">
+  <thead>
+    <tr>
+      <th>Return to Services List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="http://localhost:8080">Services List</a></td>
+    </tr>
+  </tbody>  
+</table>
+</body></html>{% endif %}{% endif %}
