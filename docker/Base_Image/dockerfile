@@ -18,6 +18,9 @@ RUN echo "==> Adding pyATS ..." \
 RUN echo "==> Adding Apache2 ..." \
  && apt-get install -y apache2
 
+RUN echo "==> Adding Elasticsearch ..." \
+ && pip install elasticsearch
+
 COPY /Camelot/styles.css /var/www/html/
 
 EXPOSE 80

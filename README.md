@@ -80,11 +80,55 @@ git clone https://github.com/automateyournetwork/merlin_docker_nexus.git
 
 3. Use docker-compose to create and build your Docker container and images 
 
+4. First bring up the ElasticSearch service
+
+``` console
+
+docker-compose up elasticsearch
+
+```
+
+![Bring up ELK](images/bring_up_elastic.PNG)
+
+Visit http://localhost:9200 and confirm the service is up - you will be prompted for credentaisl
+
+![Bring up ELK](images/bring_up_elastic02.PNG)
+
+Use the following credentials (also found in the elastic_credentials.txt file)
+
+User elastic
+Password: hhymkRPkY1NZBeuO9WIP
+
+![Bring up ELK](images/bring_up_elastic03.PNG)
+
+![Bring up ELK](images/bring_up_elastic04.PNG)
+
+Now bring up Kibana, this will also restart the ElasticSearch container
+
+``` console
+
+docker-compose up kibana
+
+```
+
+![Bring up ELK](images/bring_up_elastic05.PNG)
+
+Visit http://localhost:9200 and confirm ElasticSearch is back up
+
+Also visit http://localhost:9300 and log into Kibana with the same credentials 
+
+![Bring up ELK](images/bring_up_elastic06.PNG)
+
+![Bring up ELK](images/bring_up_elastic07.PNG)
+
+Now bring up either individually collectively bring up the Merlin containers
+
 ``` console
 
 docker-compose up
 
 ```
+
 ![Docker-Compose Up](images/creating.PNG)
 
 Now check Docker Desktop - Images to confirm all of your microservices are In Use 
@@ -98,6 +142,7 @@ Next check your Container / Apps and expand merlin_docker_nexus - you should see
 Now launch your browser and visit http://localhost:8080 to visit the Nexus 9000 Services Homepage
 
 ![Docker Homepage](images/docker_homepage.PNG)
+![Docker Homepage](images/docker_homepage01.PNG)
 
 Click any of the links - here is the Show Version micro-service
 
@@ -141,7 +186,34 @@ Or the YAML
 
 ![Postman YAML](images/postman05.PNG)
 
-Cisco has several APIs to get different information returned in JSON format. Using the Ansible URI Module you can access these APIs, query the JSON output, and create formatted CSV files. 
+# Elastic
+
+![Elastic Logo](https://images.contentstack.io/v3/assets/bltefdd0b53724fa2ce/blt280217a63b82a734/5bbdaacf63ed239936a7dd56/elastic-logo.svg)
+
+As you know behind http://localhost:9200 there is an ElasticSearch engine full of our network state information
+
+There is a pre-made Postman Collection - Merlin ElasicSearch.postman_collection.json you can import into your Postman to perform various searches against the ElasticSearch
+
+![Elastic and Postman](images/postman_elastic.PNG)
+
+## ElasticVue
+
+The best way to consume Elastic and to Search is with the ElasticVue browser extension
+
+Follow the instructions on [ElasticVue](https://elasticvue.com/) 
+
+Then click the button beside your browser URL bar to launch it 
+
+![ElasticVue](images/elasticvue01.PNG)
+
+Authenticate with the elastic account
+
+And Start Searching
+
+![ElasticVue](images/elasticvue02.PNG)
+
+# Cisco SmartNet Total Care
+Cisco has several APIs to get different information returned in JSON format. Using the Python Requests we can access these APIs, query the JSON output, and create formatted CSV files. 
 
 [Support API](https://developer.cisco.com/site/support-apis/)
 

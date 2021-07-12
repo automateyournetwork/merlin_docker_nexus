@@ -19,6 +19,8 @@ from pyats import topology
 from pyats.log.utils import banner
 from jinja2 import Environment, FileSystemLoader
 from general_functionalities import ParseShowCommandFunction, ParseLearnFunction, ParseConfigFunction, ParseDictFunction
+import uuid
+from elasticsearch import Elasticsearch
 
 # ----------------
 # Get logger for script
@@ -38,6 +40,12 @@ filetype_loop = ["csv","md","html"]
 
 template_dir = 'templates/cisco/nxos'
 env = Environment(loader=FileSystemLoader(template_dir))
+
+# ----------------
+# Define Elastic
+# ---------------
+
+es = Elasticsearch([{'host': 'elasticsearch', 'port': '9200'}], http_auth=('elastic', 'hhymkRPkY1NZBeuO9WIP'))
 
 # ----------------
 # AE Test Setup
@@ -62,6 +70,7 @@ class Collect_Information(aetest.Testcase):
         # Loop over devices
         # ---------------------------------------
         for device in testbed:
+            unique_id = uuid.uuid4().hex
 
             # ---------------------------------------
             # Execute learn for various functions
@@ -73,9 +82,16 @@ class Collect_Information(aetest.Testcase):
             # Create JSON, YAML, CSV, MD, HTML, HTML Mind Map files from the Parsed Data
             # ---------------------------------------         
             with steps.start('Store data',continue_=True) as step:              
-                print(self.learned_vlan)
                 # Learned vlan
                 if self.learned_vlan is not None:
+                    learned_vlan_elastic_template = env.get_template('elastic_standards.j2')
+                    learned_vlan_elastic = learned_vlan_elastic_template.render(to_normalize_for_elastic=self.learned_vlan)
+                    # ----------------
+                    # Store vlan in Elastic
+                    # ----------------
+                    es.index(index='%s_learned_vlan' % device.alias.lower(), id=unique_id, 
+                             body=learned_vlan_elastic)
+                                                 
                     learned_vlan_template = env.get_template('learned_vlan.j2')
                     directory = "Learned_VLAN"
                     file_name = "learned_vlan"

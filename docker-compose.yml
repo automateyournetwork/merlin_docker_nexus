@@ -14,158 +14,242 @@ services:
       - "8080:80"       
   learned_acl:
     image: johncapobianco/merlin:learned_acl
+    depends_on:
+      - elasticsearch
     build: 
       context: ./
       dockerfile: ./docker/Learned_ACL/dockerfile
     ports:
       - "8081:80"
+    networks:
+      - elastic      
   learned_arp:
     image: johncapobianco/merlin:learned_arp
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/Learned_ARP/dockerfile
     ports:
-      - "8082:80"
+      - "8082:80"      
+    networks:
+      - elastic      
   learned_bgp:
     image: johncapobianco/merlin:learned_bgp
+    depends_on:
+      - elasticsearch
     build: 
       context: ./
       dockerfile: ./docker/Learned_BGP/dockerfile
     ports:
       - "8083:80"
+    networks:
+      - elastic       
   learned_config:
     image: johncapobianco/merlin:learned_config
     build: 
       context: ./
       dockerfile: ./docker/Learned_Config/dockerfile
     ports:
-      - "8084:80"
+      - "8084:80"      
   learned_interface:
     image: johncapobianco/merlin:learned_interface
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/Learned_Interface/dockerfile
     ports:
       - "8085:80"
+    networks:
+      - elastic      
   learned_ospf:
     image: johncapobianco/merlin:learned_ospf
+    depends_on:
+      - elasticsearch 
     build: 
       context: ./
       dockerfile: ./docker/Learned_OSPF/dockerfile
     ports:
-      - "8086:80"      
+      - "8086:80"
+    networks:
+      - elastic             
   learned_platform:
     image: johncapobianco/merlin:learned_platform
+    depends_on:
+      - elasticsearch 
     build: 
       context: ./
       dockerfile: ./docker/Learned_Platform/dockerfile
     ports:
       - "8087:80"
+    networks:
+      - elastic       
   learned_routing:
     image: johncapobianco/merlin:learned_routing
+    depends_on:
+      - elasticsearch 
     build: 
       context: ./
       dockerfile: ./docker/Learned_Routing/dockerfile
     ports:
       - "8088:80"
+    networks:
+      - elastic       
   learned_vlan:
     image: johncapobianco/merlin:learned_vlan
+    depends_on:
+      - elasticsearch 
     build: 
       context: ./
       dockerfile: ./docker/Learned_VLAN/dockerfile
     ports:
       - "8089:80"
+    networks:
+      - elastic       
   learned_vrf:
     image: johncapobianco/merlin:learned_vrf
+    depends_on:
+      - elasticsearch 
     build: 
       context: ./
       dockerfile: ./docker/Learned_VRF/dockerfile
     ports:
       - "8090:80"
+    networks:
+      - elastic       
   bgp_process_vrf_all:
     image: johncapobianco/merlin:bgp_process_vrf_all
+    depends_on:
+      - elasticsearch
     build: 
       context: ./
       dockerfile: ./docker/BGP_Process_VRF_All/dockerfile
     ports:
       - "8091:80"
+    networks:
+      - elastic      
   bgp_sessions:
     image: johncapobianco/merlin:bgp_sessions
+    depends_on:
+      - elasticsearch
     build: 
       context: ./
       dockerfile: ./docker/BGP_Sessions/dockerfile
     ports:
       - "8092:80"
+    networks:
+      - elastic      
   interface_status:
     image: johncapobianco/merlin:interface_status
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/Interface_Status/dockerfile
     ports:
       - "8093:80"
+    networks:
+      - elastic      
   inventory:
     image: johncapobianco/merlin:inventory
+    depends_on:
+      - elasticsearch     
     build: 
       context: ./
       dockerfile: ./docker/Inventory/dockerfile
     ports:
       - "8094:80"
+    networks:
+      - elastic        
   ip_int_brief:
     image: johncapobianco/merlin:ip_int_brief
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/IP_Int_Brief/dockerfile
     ports:
       - "8095:80"
+    networks:
+      - elastic       
   ip_ospf:
     image: johncapobianco/merlin:ip_ospf
+    depends_on:
+      - elasticsearch 
     build: 
       context: ./
       dockerfile: ./docker/IP_OSPF/dockerfile
     ports:
       - "8096:80"
+    networks:
+      - elastic        
   ip_route:
     image: johncapobianco/merlin:ip_route
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/IP_Route/dockerfile
     ports:
       - "8097:80"
+    networks:
+      - elastic      
   mac_address_table:
     image: johncapobianco/merlin:mac_address_table
+    depends_on:
+      - elasticsearch
     build: 
       context: ./
       dockerfile: ./docker/MAC_Address_Table/dockerfile
     ports:
       - "8098:80"
+    networks:
+      - elastic      
   port_channel_summary:
     image: johncapobianco/merlin:port_channel_summary
+    depends_on:
+      - elasticsearch  
     build: 
       context: ./
       dockerfile: ./docker/Port_Channel_Summary/dockerfile
     ports:
       - "8099:80"
+    networks:
+      - elastic      
   version:
     image: johncapobianco/merlin:version
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/Version/dockerfile
     ports:
       - "8100:80"
+    networks:
+      - elastic      
   vlan:
     image: johncapobianco/merlin:vlan
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/VLAN/dockerfile
     ports:
       - "8101:80"
+    networks:
+      - elastic       
   vrf:
     image: johncapobianco/merlin:vrf
+    depends_on:
+      - elasticsearch    
     build: 
       context: ./
       dockerfile: ./docker/VRF/dockerfile
     ports:
       - "8102:80"
+    networks:
+      - elastic       
   bgp_check:
     image: johncapobianco/merlin:bgp_check
     build: 
@@ -218,4 +302,38 @@ services:
   #    context: ./
   #    dockerfile: ./docker/Recommended_Release/dockerfile
   #  ports:
-  #    - "8109:80"      
+  #    - "8109:80"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./elastic-certificates.p12:/usr/share/elasticsearch/config/elastic-certificates.p12
+      - ./docker-data-volumes/elasticsearch:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.13.3
+    depends_on:
+      - elasticsearch
+    container_name: kibana
+    ports:
+      - 9300:5601
+    environment:
+      SERVERNAME: localhost
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      SERVER_SSL_ENABLED: "false"
+    networks:
+      - elastic
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+
+networks:
+  elastic:
+    driver: bridge

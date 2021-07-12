@@ -1,6 +1,7 @@
 FROM johncapobianco/merlin:base_image
 
 COPY /templates/cisco/api/recommended_release.j2 /templates/cisco/api/
+COPY /templates/cisco/nxos/elastic_standards.j2 /templates/cisco/nxos/
 COPY /api_credentials/cisco.yaml /api_credentials/
 COPY /testbed/testbed_DevNet_Nexus9k_Sandbox.yaml /testbed/
 COPY /python/general_functionalities.py /python/
