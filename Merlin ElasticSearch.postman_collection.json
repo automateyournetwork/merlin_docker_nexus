@@ -1,0 +1,2396 @@
+{
+	"info": {
+		"_postman_id": "947d7c03-f072-4157-9d8d-052bcbd7721b",
+		"name": "Merlin ElasticSearch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Setup",
+			"item": [
+				{
+					"name": "PUT Pipeline",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\" : \"timestamp\",\r\n  \"processors\" : [\r\n    {\r\n      \"set\": {\r\n        \"field\": \"_source.ingest_time\",\r\n        \"value\": \"{{_ingest.timestamp}}\"\r\n      }\r\n    }      \r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_ingest/pipeline/merlin_pipeline",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_ingest",
+								"pipeline",
+								"merlin_pipeline"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Create Index",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"settings\": \r\n    {\r\n        \"index.default_pipeline\": \"merlin_pipeline\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_version",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_version"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Fields Limit Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"index.mapping.total_fields.limit\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_settings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Nest Limit Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"index.mapping.depth.limit\": 50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/_settings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"_settings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Base Services",
+			"item": [
+				{
+					"name": "GET ElasticSearch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Kibana",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9300"
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned ACL",
+			"item": [
+				{
+					"name": "GET Learned ACL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_acl",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_acl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned ACL Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_acl/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_acl",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned ACL Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_acl/_doc/4d3d10868c624e6496c993dfce9fb8d6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_acl",
+								"_doc",
+								"4d3d10868c624e6496c993dfce9fb8d6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned ACL Search ACEs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_acl/_doc/4d3d10868c624e6496c993dfce9fb8d6?_source=acls.*.aces.*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_acl",
+								"_doc",
+								"4d3d10868c624e6496c993dfce9fb8d6"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "acls.*.aces.*"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned ARP",
+			"item": [
+				{
+					"name": "GET Learned ARP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_arp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_arp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned ARP Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_arp/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_arp",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned ARP Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_arp/_doc/41031eb91037478ebc63cd7fc08dd249",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_arp",
+								"_doc",
+								"41031eb91037478ebc63cd7fc08dd249"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned ARP Search Local Proxy Enable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_arp/_doc/41031eb91037478ebc63cd7fc08dd249?_source=interfaces.*.arp_dynamic_learning.local_proxy_enable",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_arp",
+								"_doc",
+								"41031eb91037478ebc63cd7fc08dd249"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "interfaces.*.arp_dynamic_learning.local_proxy_enable"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned BGP",
+			"item": [
+				{
+					"name": "GET Learned BGP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_bgp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_bgp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned BGP Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_bgp/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_bgp",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned BGP Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_bgp/_doc/39637bea79c04dfa90942b71f72965d0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_bgp",
+								"_doc",
+								"39637bea79c04dfa90942b71f72965d0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned BGP Search Remote AS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_bgp/_doc/39637bea79c04dfa90942b71f72965d0?_source=instance.*.vrf.*.neighbor.*.remote_as",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_bgp",
+								"_doc",
+								"39637bea79c04dfa90942b71f72965d0"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "instance.*.vrf.*.neighbor.*.remote_as"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned Interface",
+			"item": [
+				{
+					"name": "GET Learned Interface",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_interface",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_interface"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Interface Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_interface/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_interface",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Interface Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_interface/_doc/6c0ae6fe710c48e2be3dd52348ab87ef",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_interface",
+								"_doc",
+								"6c0ae6fe710c48e2be3dd52348ab87ef"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Interface Search Loopback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_interface/_doc/6c0ae6fe710c48e2be3dd52348ab87ef?_source=loopback1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_interface",
+								"_doc",
+								"6c0ae6fe710c48e2be3dd52348ab87ef"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "loopback1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned OSPF",
+			"item": [
+				{
+					"name": "GET Learned OSPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_ospf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_ospf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned OSPF Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_ospf/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_ospf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned OSPF Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_ospf/_doc/d7ff10279f8441728caf5b7a63d25003",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_ospf",
+								"_doc",
+								"d7ff10279f8441728caf5b7a63d25003"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned OSPF Search Links",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_ospf/_doc/d7ff10279f8441728caf5b7a63d25003?_source=vrf.*.address_family.*.instance.*.areas.*.database.lsa_types.*.lsas.*.ospfv2.body.router.links.*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_ospf",
+								"_doc",
+								"d7ff10279f8441728caf5b7a63d25003"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.*.address_family.*.instance.*.areas.*.database.lsa_types.*.lsas.*.ospfv2.body.router.links.*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned OSPF Search Enabled Interfaces",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_ospf/_doc/d7ff10279f8441728caf5b7a63d25003?_source=vrf.*.address_family.*.instance.*.areas.*.interfaces.*.enable",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_ospf",
+								"_doc",
+								"d7ff10279f8441728caf5b7a63d25003"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "_source",
+									"value": "vrf.*.address_family.*.instance.*.areas.*.interfaces.*.enable"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned Platform",
+			"item": [
+				{
+					"name": "GET Learned Platform",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_platform",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_platform"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Platform Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_platform/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_platform",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Platform Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_platform/_doc/e47352be36134243bfe29eb7a59bdc11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_platform",
+								"_doc",
+								"e47352be36134243bfe29eb7a59bdc11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Platform Search Slot Names",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_platform/_doc/e47352be36134243bfe29eb7a59bdc11?_source=slot.*.*.name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_platform",
+								"_doc",
+								"e47352be36134243bfe29eb7a59bdc11"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "slot.*.*.name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Platform Search Software Version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_platform/_doc/e47352be36134243bfe29eb7a59bdc11?_source=version",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_platform",
+								"_doc",
+								"e47352be36134243bfe29eb7a59bdc11"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "version"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned Routing",
+			"item": [
+				{
+					"name": "GET Learned Routing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_routing",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_routing"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Routing Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_routing/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_routing",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Routing Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_routing/_doc/c65647a7f1d64fc69132db6d40aebe26",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_routing",
+								"_doc",
+								"c65647a7f1d64fc69132db6d40aebe26"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Routing Search Active Routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_routing/_doc/c65647a7f1d64fc69132db6d40aebe26?_source=vrf.*.address_family.*.routes.*.active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_routing",
+								"_doc",
+								"c65647a7f1d64fc69132db6d40aebe26"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.*.address_family.*.routes.*.active"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned Routing Search Next Hop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_routing/_doc/c65647a7f1d64fc69132db6d40aebe26?_source=vrf.*.address_family.*.routes.*.next_hop.next_hop_list.*.next_hop",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_routing",
+								"_doc",
+								"c65647a7f1d64fc69132db6d40aebe26"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.*.address_family.*.routes.*.next_hop.next_hop_list.*.next_hop"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned VLAN",
+			"item": [
+				{
+					"name": "GET Learned VLAN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vlan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vlan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VLAN Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vlan/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vlan",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VLAN Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vlan/_doc/fc85c3b3f08c46d9b54c90aecdd0569b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vlan",
+								"_doc",
+								"fc85c3b3f08c46d9b54c90aecdd0569b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VLAN Search State",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vlan/_doc/fc85c3b3f08c46d9b54c90aecdd0569b?_source=vlans.*.state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vlan",
+								"_doc",
+								"fc85c3b3f08c46d9b54c90aecdd0569b"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vlans.*.state"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VLAN Search Interfaces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vlan/_doc/fc85c3b3f08c46d9b54c90aecdd0569b?_source=vlans.*.interfaces",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vlan",
+								"_doc",
+								"fc85c3b3f08c46d9b54c90aecdd0569b"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vlans.*.interfaces"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Learned VRF",
+			"item": [
+				{
+					"name": "GET Learned VRF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vrf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vrf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VRF Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vrf/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vrf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VRF Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vrf/_doc/6c75a390159f4313bd1683cc0878cb55",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vrf",
+								"_doc",
+								"6c75a390159f4313bd1683cc0878cb55"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Learned VRF Search Address Family",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_learned_vrf/_doc/6c75a390159f4313bd1683cc0878cb55?_source=vrfs.*.address_family",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_learned_vrf",
+								"_doc",
+								"6c75a390159f4313bd1683cc0878cb55"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrfs.*.address_family"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BGP Process VRF All",
+			"item": [
+				{
+					"name": "GET BGP Process VRF All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_process_vrf_all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_process_vrf_all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BGP Process VRF All Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_process_vrf_all/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_process_vrf_all",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BGP Process VRF All Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_process_vrf_all/_doc/43d94a75707c425c9f1e2696e6077a36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_process_vrf_all",
+								"_doc",
+								"43d94a75707c425c9f1e2696e6077a36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BGP Process VRF All Search VRF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_process_vrf_all/_doc/64e168509c4a4c7f93861394bfee8cac?_source=vrf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_process_vrf_all",
+								"_doc",
+								"64e168509c4a4c7f93861394bfee8cac"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BGP Sessions",
+			"item": [
+				{
+					"name": "GET BGP Sessions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_sessions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BGP Sessions Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_sessions/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_sessions",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BGP Sessions Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_sessions/_doc/2527752b57174200964303156873e700",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_sessions",
+								"_doc",
+								"2527752b57174200964303156873e700"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BGP Sessions Search VRF Peers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_bgp_sessions/_doc/2527752b57174200964303156873e700?_source=vrf.default.vrf_peers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_bgp_sessions",
+								"_doc",
+								"2527752b57174200964303156873e700"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.default.vrf_peers"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Interface Status",
+			"item": [
+				{
+					"name": "GET Interface Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_interface_status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_interface_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Interface Status Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_interface_status/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_interface_status",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Interface Status Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_interface_status/_doc/3fb52499938142b483dfa19fbfa805e8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_interface_status",
+								"_doc",
+								"3fb52499938142b483dfa19fbfa805e8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Interface Status Search Interface Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_interface_status/_search?_source=interfaces.*.status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_interface_status",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "interfaces.*.status"
+								},
+								{
+									"key": "_source",
+									"value": "ingest_time",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "GET Inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_inventory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_inventory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Inventory Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_inventory/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_inventory",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Inventory Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_inventory/_doc/1981b1329673444c8c2b68fe2f150053",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_inventory",
+								"_doc",
+								"1981b1329673444c8c2b68fe2f150053"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Inventory Search Descriptions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_inventory/_doc/1981b1329673444c8c2b68fe2f150053?_source=name.*.description",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_inventory",
+								"_doc",
+								"1981b1329673444c8c2b68fe2f150053"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "name.*.description"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IP Interface Brief",
+			"item": [
+				{
+					"name": "GET IP Interface Brief",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_interface_brief",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_interface_brief"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Interface Brief Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_interface_brief/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_interface_brief",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Interface Brief Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_interface_brief/_doc/11b0c95fb3164709818f9b1a53c5a99d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_interface_brief",
+								"_doc",
+								"11b0c95fb3164709818f9b1a53c5a99d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Inteface Brief Interface Search Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_interface_brief/_doc/11b0c95fb3164709818f9b1a53c5a99d?_source=interface.*.interface_status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_interface_brief",
+								"_doc",
+								"11b0c95fb3164709818f9b1a53c5a99d"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "interface.*.interface_status"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IP OSPF",
+			"item": [
+				{
+					"name": "GET IP OSPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_ospf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_ospf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP OSPF Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_ospf/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_ospf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP OSPF Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_ospf/_doc/427a557b1946422b856d17f6b411cca2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_ospf",
+								"_doc",
+								"427a557b1946422b856d17f6b411cca2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP OSPF Search Active Interfaces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_ospf/_doc/427a557b1946422b856d17f6b411cca2?_source=vrf.default.address_family.ipv4.instance.*.areas.*.numbers.active_interfaces",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_ospf",
+								"_doc",
+								"427a557b1946422b856d17f6b411cca2"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.default.address_family.ipv4.instance.*.areas.*.numbers.active_interfaces"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IP Route",
+			"item": [
+				{
+					"name": "GET IP Route",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_route",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_route"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Route Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_route/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_route",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Route Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_route/_doc/8d59e8c866394388a1a5cd975297470d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_route",
+								"_doc",
+								"8d59e8c866394388a1a5cd975297470d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Route Search Routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_route/_doc/8d59e8c866394388a1a5cd975297470d?_source=vrf.*.address_family*.routes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_route",
+								"_doc",
+								"8d59e8c866394388a1a5cd975297470d"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.*.address_family*.routes"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET IP Route Search Next Hop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_ip_route/_doc/8d59e8c866394388a1a5cd975297470d?_source=vrf.*.address_family*.routes.*.next_hop.next_hop_list.*.next_hop",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_ip_route",
+								"_doc",
+								"8d59e8c866394388a1a5cd975297470d"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrf.*.address_family*.routes.*.next_hop.next_hop_list.*.next_hop"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MAC Address Table",
+			"item": [
+				{
+					"name": "GET MAC Address Table",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_mac_address_table",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_mac_address_table"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET MAC Address Table Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_mac_address_table/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_mac_address_table",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET MAC Address Table Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_mac_address_table/_doc/ff2ca3f0dbda4e55ad920b7efea81040",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_mac_address_table",
+								"_doc",
+								"ff2ca3f0dbda4e55ad920b7efea81040"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET MAC Address Table Search All MACs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_mac_address_table/_doc/ff2ca3f0dbda4e55ad920b7efea81040?_source=mac_table.vlans.*.mac_addresses.*.mac_address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_mac_address_table",
+								"_doc",
+								"ff2ca3f0dbda4e55ad920b7efea81040"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "mac_table.vlans.*.mac_addresses.*.mac_address"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Port Channel Summary",
+			"item": [
+				{
+					"name": "GET Port Channel Summary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_port_channel_summary",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_port_channel_summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Port Channel Summary Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_port_channel_summary/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_port_channel_summary",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Port Channel Summary Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_port_channel_summary/_doc/e1dac494bd644a85b26202870899e884",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_port_channel_summary",
+								"_doc",
+								"e1dac494bd644a85b26202870899e884"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Port Channel Summary Search *",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_port_channel_summary/_doc/e1dac494bd644a85b26202870899e884?_source=interfaces.*.members",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_port_channel_summary",
+								"_doc",
+								"e1dac494bd644a85b26202870899e884"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "interfaces.*.members"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Version",
+			"item": [
+				{
+					"name": "GET Version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_version",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_version"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Version Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_version/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_version",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Version Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_version/_doc/9a6ec98432874b5181295ab29bd3bdb5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_version",
+								"_doc",
+								"9a6ec98432874b5181295ab29bd3bdb5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Version Search Version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_version/_doc/9a6ec98432874b5181295ab29bd3bdb5?_source=platform.software.system_version",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_version",
+								"_doc",
+								"9a6ec98432874b5181295ab29bd3bdb5"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "platform.software.system_version"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VLAN",
+			"item": [
+				{
+					"name": "GET VLAN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vlan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vlan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET VLAN Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vlan/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vlan",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET VLAN Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vlan/_doc/848842b99c1249dab23a69e109646ad3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vlan",
+								"_doc",
+								"848842b99c1249dab23a69e109646ad3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET VLAN Search Interfaces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vlan/_doc/848842b99c1249dab23a69e109646ad3?_source=vlans.*.interfaces",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vlan",
+								"_doc",
+								"848842b99c1249dab23a69e109646ad3"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vlans.*.interfaces"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "VRF",
+			"item": [
+				{
+					"name": "GET VRF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vrf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vrf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET VRF Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vrf/_search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vrf",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET VRF Specific Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vrf/_doc/f825b6844fe543ce9235cf87412f2984",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vrf",
+								"_doc",
+								"f825b6844fe543ce9235cf87412f2984"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET VRF Search VRF State",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9200/devnet_sandbox_nexus9k_show_vrf/_doc/f825b6844fe543ce9235cf87412f2984?_source=vrfs.*.vrf_state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9200",
+							"path": [
+								"devnet_sandbox_nexus9k_show_vrf",
+								"_doc",
+								"f825b6844fe543ce9235cf87412f2984"
+							],
+							"query": [
+								{
+									"key": "_source",
+									"value": "vrfs.*.vrf_state"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "hhymkRPkY1NZBeuO9WIP",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "elastic",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -73,9 +73,9 @@ class Collect_Information(aetest.Testcase):
             # Create JSON, YAML, CSV, MD, HTML, HTML Mind Map files from the Parsed Data
             # ---------------------------------------         
             with steps.start('Store data',continue_=True) as step:              
-                print(self.learned_config)
                 # Learned config
                 if self.learned_config is not None:
+
                     learned_config_template = env.get_template('learned_config.j2')                    
                     directory = "Learned_Config"
                     file_name = "learned_config"
