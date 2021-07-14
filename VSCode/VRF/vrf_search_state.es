@@ -1,0 +1,1 @@
+GET /devnet_sandbox_nexus9k_show_vrf/_doc/f825b6844fe543ce9235cf87412f2984?_source=vrfs.*.vrf_state

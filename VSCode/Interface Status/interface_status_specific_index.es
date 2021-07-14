@@ -1,0 +1,1 @@
+GET /devnet_sandbox_nexus9k_show_interface_status/_doc/3fb52499938142b483dfa19fbfa805e8

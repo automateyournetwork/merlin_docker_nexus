@@ -1,0 +1,1 @@
+GET /devnet_sandbox_nexus9k_show_port_channel_summary/_doc/e1dac494bd644a85b26202870899e884

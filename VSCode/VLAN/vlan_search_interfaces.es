@@ -1,0 +1,1 @@
+GET /devnet_sandbox_nexus9k_show_vlan/_doc/848842b99c1249dab23a69e109646ad3?_source=vlans.*.interfaces

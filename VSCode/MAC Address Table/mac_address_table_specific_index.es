@@ -1,0 +1,1 @@
+GET /devnet_sandbox_nexus9k_show_mac_address_table/_doc/ff2ca3f0dbda4e55ad920b7efea81040
