@@ -1,0 +1,1 @@
+GET /devnet_sandbox_nexus9k_show_ip_interface_brief/_doc/11b0c95fb3164709818f9b1a53c5a99d
